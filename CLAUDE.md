@@ -33,10 +33,16 @@ Portfolio personnel full-stack :
 - Proposer un "checkpoint" pour vérifier que ça marche
 - Inclure les tests correspondants quand pertinent
 
+### Préférences d'exécution
+- **Thomas exécute lui-même les commandes** : donner les commandes à copier, pas les exécuter automatiquement
+- Fournir : la commande, les étapes, les résultats attendus
+- Thomas interrompra si besoin d'aide ou si erreur
+
 ### Ce qu'on évite
 - Générer des fichiers complets sans explication
 - Autocomplétion ou scaffolding massif
 - Sauter des étapes "parce que c'est évident"
+- Exécuter des commandes sans demander (sauf recherche/lecture de code)
 
 ---
 
@@ -83,13 +89,13 @@ portfolio/
 
 ## 🛤️ Roadmap (ordre suggéré)
 
-### Phase 1 : Setup environnement
-- [ ] Initialiser le repo Git avec .gitignore approprié
-- [ ] Installer Angular CLI v21, créer le projet frontend (zoneless, SCSS, Vitest)
-- [ ] Initialiser le projet Node/Express backend avec TypeScript
-- [ ] Setup Docker (Dockerfiles + docker-compose avec MySQL)
-- [ ] Vérifier que tout tourne en local
-- [ ] Premier test qui passe (front + back)
+### Phase 1 : Setup environnement ✅
+- [x] Initialiser le repo Git avec .gitignore approprié
+- [x] Installer Angular CLI v21, créer le projet frontend (zoneless, SCSS, Vitest)
+- [x] Initialiser le projet Node/Express backend avec TypeScript
+- [x] Setup Docker (Dockerfiles + docker-compose avec MySQL)
+- [x] Vérifier que tout tourne en local
+- [ ] Premier test qui passe (front + back) — *À valider*
 
 ### Phase 2 : Backend API
 - [ ] Structure Express (routes, controllers, services, repositories)
@@ -231,14 +237,18 @@ Les échanges dans Claude Code peuvent rester en français.
 
 ## 🚀 Prochaine étape
 
-**Phase 1 — Setup environnement**
+**Phase 2 — Backend API : Structure Express**
 
-On commence par :
-1. Créer le repo GitHub (public ou privé ?)
-2. Initialiser le projet Angular 21 avec les bonnes options
-3. Vérifier que `ng serve` fonctionne
-4. Premier commit propre
+Maintenant qu'on a l'environnement en place, on attaque la création de l'API :
+
+1. **Structure l'architecture en couches** (routes → controllers → services → repositories)
+2. **Ajouter MySQL** dans docker-compose avec mysql2
+3. **Créer le dossier migrations** pour versionner les schémas SQL
+4. **Premier CRUD "Projects"** pour comprendre le flux complet
+5. **Tests unitaires** pour les repositories et controllers
+
+Objectif : avoir un endpoint fonctionnel `GET /api/projects` qui retourne des données depuis MySQL.
 
 ---
 
-*Dernière mise à jour : Novembre 2025 — Angular 21*
+*Dernière mise à jour : Décembre 2025 — Phase 1 complétée*
