@@ -3,12 +3,20 @@ import mysql from 'mysql2/promise';
 /**
  * Database configuration from environment variables
  */
+function getRequiredEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+
 const dbConfig = {
-  host: process.env.DB_HOST,         // "mysql"
-  port: parseInt(process.env.DB_PORT!), // 3306
-  user: process.env.DB_USER,         // "portfolio_user"
-  password: process.env.DB_PASSWORD, // "SecurePassword123!"
-  database: process.env.DB_NAME,     // "portfolio_db"
+  host: getRequiredEnv('DB_HOST'),
+  port: parseInt(getRequiredEnv('DB_PORT'), 10),
+  user: getRequiredEnv('DB_USER'),
+  password: getRequiredEnv('DB_PASSWORD'),
+  database: getRequiredEnv('DB_NAME'),
 };
 
 /**
@@ -18,8 +26,8 @@ const dbConfig = {
 export const pool = mysql.createPool({
   ...dbConfig,
   waitForConnections: true,
-  connectionLimit: 10,      // Max 10 connexions simultanées
-  queueLimit: 0,            // Pas de limite de file d'attente
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 /**

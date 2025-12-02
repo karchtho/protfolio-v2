@@ -97,11 +97,11 @@ portfolio/
 - [x] Vérifier que tout tourne en local
 - [ ] Premier test qui passe (front + back) — *À valider*
 
-### Phase 2 : Backend API
-- [ ] Structure Express (routes, controllers, services, repositories)
-- [ ] Connexion MySQL avec mysql2 (pool de connexions)
-- [ ] Premières migrations SQL
-- [ ] CRUD projets : endpoints REST
+### Phase 2 : Backend API ✅
+- [x] Structure Express (routes, controllers, services, repositories)
+- [x] Connexion MySQL avec mysql2 (pool de connexions)
+- [x] Premières migrations SQL
+- [x] CRUD projets : endpoints REST
 - [ ] Validation des données (express-validator ou Zod)
 - [ ] Gestion d'erreurs centralisée
 - [ ] Tests unitaires des repositories et controllers
@@ -237,18 +237,18 @@ Les échanges dans Claude Code peuvent rester en français.
 
 ## 🚀 Prochaine étape
 
-**Phase 2 — Backend API : Structure Express**
+**Phase 3 — Frontend Angular : Afficher les projets**
 
-Maintenant qu'on a l'environnement en place, on attaque la création de l'API :
+L'API backend est fonctionnelle ! Maintenant on passe au frontend :
 
-1. **Structure l'architecture en couches** (routes → controllers → services → repositories)
-2. **Ajouter MySQL** dans docker-compose avec mysql2
-3. **Créer le dossier migrations** pour versionner les schémas SQL
-4. **Premier CRUD "Projects"** pour comprendre le flux complet
-5. **Tests unitaires** pour les repositories et controllers
+1. **Service HTTP** pour appeler l'API
+2. **Composant ProjectCard** — afficher une carte de projet
+3. **Page Projects** — lister tous les projets depuis l'API
+4. **Intégration Docker** — frontend + backend + MySQL ensemble
+5. **Styling & responsive** — SCSS mobile-first
 
-Objectif : avoir un endpoint fonctionnel `GET /api/projects` qui retourne des données depuis MySQL.
+Objectif : afficher les 3 projets depuis l'API dans des cartes visuellement attrayantes.
 
 ---
 
-*Dernière mise à jour : Décembre 2025 — Phase 1 complétée*
+*Dernière mise à jour : Décembre 2025 — Phase 2 complétée (Backend API CRUD)*
