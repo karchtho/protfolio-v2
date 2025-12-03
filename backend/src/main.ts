@@ -2,14 +2,21 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 // Load environment variables FIRST, before any other imports
-dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
+const envPath = path.resolve(__dirname, '../.env.local');
+const result = dotenv.config({ path: envPath })
 
+if (result.error) {
+  console.warn(`⚠️  No .env.local file found at ${envPath}, using environment variables`);
+} else console.log(`✅ Environment loaded from ${envPath}`);
+
+// eslint-disable-next-line import/first -- Must load dotenv before other imports
 import express from 'express';
 
+// eslint-disable-next-line import/first -- Must load dotenv before other imports
 import projectRouter from './routes/projects.routes';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());

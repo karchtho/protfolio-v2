@@ -1,13 +1,15 @@
 ## 🛠️ Development Workflow
 
-### Making changes
+> For environment setup and Docker instructions, see [../SETUP.md](../SETUP.md)
 
-Both frontend and backend support **live reload** in development mode:
+### Live Reload in Development
+
+Both frontend and backend support **live reload**:
 
 - **Frontend**: Edit files in `frontend/src/` → changes appear instantly at localhost:4200
 - **Backend**: Edit files in `backend/src/` → nodemon auto-restarts the server
 
-### Running tests
+### Running Tests
 
 **Frontend** (Angular + Vitest):
 ```bash
@@ -21,12 +23,12 @@ cd backend
 npm test
 ```
 
-### Building for production
+### Building for Production
 
 **Frontend**:
 ```bash
 cd frontend
-npm run build   # Output: dist/
+npm run build   # Output: dist/frontend/browser/
 ```
 
 **Backend**:
@@ -34,30 +36,6 @@ npm run build   # Output: dist/
 cd backend
 npm run build   # Output: dist/
 ```
-
-## 🔧 Tech Stack
-
-| Layer | Technology | Version |
-|-------|-----------|---------|
-| **Frontend** | Angular | 21 |
-| **Frontend Build** | Vite | Latest |
-| **Backend** | Express | 5.x |
-| **Runtime** | Node.js | 22 LTS |
-| **Language** | TypeScript | 5.9+ |
-| **Styling** | SCSS | Custom |
-| **Testing** | Vitest | 4.x |
-| **Container** | Docker | 28+ |
-
-## 📚 Code Conventions
-
-All code follows the guidelines in **CLAUDE.md**:
-
-- **Language**: English (code, commits, docs)
-- **TypeScript**: Strict mode enabled, no `any` types
-- **Components**: Standalone (Angular 21 default)
-- **State**: Signals for reactivity
-- **Styling**: SCSS with BEM naming
-- **Git**: Conventional commits (`feat:`, `fix:`, `docs:`, etc.)
 
 ## 🚦 Common Tasks
 

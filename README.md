@@ -28,60 +28,33 @@ npm --version    # 11.6+
 docker --version # 28+
 ```
 
-## 🚀 Quick Start (Local Development - No Docker)
+## 🚀 Quick Start
 
-### 1. Clone and install dependencies
+### Local Development (No Docker)
 
 ```bash
+# Clone and install
 git clone <repo-url>
 cd protfolio-v2
+
+# Frontend
+cd frontend && npm install && npm start
+
+# Backend (new terminal)
+cd backend && npm install && npm run dev
 ```
 
-### 2. Frontend setup
+Access at **http://localhost:4200** (frontend) and **http://localhost:3000** (backend)
+
+### Docker Development
 
 ```bash
-cd frontend
-npm install
-npm start
+docker compose -f docker-compose.dev.yml up
 ```
 
-The Angular app will be available at **http://localhost:4200**
+Access same URLs as above.
 
-### 3. Backend setup (in a new terminal)
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-The Express API will be available at **http://localhost:3000**
-
-## 🐳 Quick Start (Docker)
-
-### 1. Clone
-
-```bash
-git clone <repo-url>
-cd protfolio-v2
-```
-
-### 2. Build and run with Docker Compose
-
-```bash
-sudo docker-compose build --no-cache
-sudo docker-compose up
-```
-
-Access:
-- **Frontend**: http://localhost:4200
-- **Backend**: http://localhost:3000
-
-### 3. Stop services
-
-```bash
-sudo docker-compose down
-```
+**📖 For detailed setup instructions, environment configuration, and troubleshooting, see [docs/SETUP.md](docs/SETUP.md)**
 
 ## 📁 Project Structure
 

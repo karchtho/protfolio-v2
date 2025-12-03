@@ -7,26 +7,25 @@ services:
       - "4200:4200"
     environment:
       - NODE_ENV=development
+      - API_URL=http://backend:3000
+      - ENVIRONMENT=development
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
       - /app/node_modules
-    # Pas de depends_on backend pour l'instant
+    depends_on:
+      - backend
 
-# Backend commenté tant que tu n'en as pas besoin
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
+    env_file:
+      - ./backend/.env
     environment:
-      - NODE_ENV=${NODE_ENV}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      - NODE_ENV=development
     volumes:
       - ./backend/src:/app/src
       - /app/node_modules
@@ -39,10 +38,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: RootSecurePassword456!
+      MYSQL_DATABASE: portfolio_db
+      MYSQL_USER: portfolio_user
+      MYSQL_PASSWORD: SecurePassword123!
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/migrations:/docker-entrypoint-initdb.d

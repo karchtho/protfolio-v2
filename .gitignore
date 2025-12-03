@@ -7,11 +7,13 @@ yarn-error.log
 
 # Environment
 .env
+.env.*
 .env.local
 .env.dev
 .env.prod
 .env.docker
 .env.*.local
+!.env.example
 
 # IDE
 .vscode/

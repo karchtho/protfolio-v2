@@ -102,11 +102,15 @@ portfolio/
 - [x] Connexion MySQL avec mysql2 (pool de connexions)
 - [x] Premières migrations SQL
 - [x] CRUD projets : endpoints REST
+- [x] Environment variables refactoring (backend/.env structure)
+- [x] Docker secrets support (production-ready with secrets.ts)
+- [x] Angular runtime configuration (build once, deploy anywhere)
+- [x] Docker dev & prod environments fully functional
 - [ ] Validation des données (express-validator ou Zod)
 - [ ] Gestion d'erreurs centralisée
 - [ ] Tests unitaires des repositories et controllers
 
-### Phase 3 : Frontend Angular
+### Phase 3 : Frontend Angular (EN COURS)
 - [ ] Comprendre les standalone components
 - [ ] Routing avec lazy loading
 - [ ] Service HTTP pour appeler l'API
@@ -116,7 +120,7 @@ portfolio/
 - [ ] Tests des composants avec Vitest
 
 ### Phase 4 : Intégration & Style
-- [ ] Connexion front ↔ back (environnements, proxy dev)
+- [x] Connexion front ↔ back (environnements, proxy dev) — *Configuration en place*
 - [ ] Architecture SCSS (variables, mixins, structure)
 - [ ] Design responsive mobile-first
 - [ ] Animations de base
@@ -128,11 +132,11 @@ portfolio/
 - [ ] Upload d'images (optionnel)
 
 ### Phase 6 : Déploiement OVH
-- [ ] Docker Compose production optimisé
+- [x] Docker Compose production optimisé — *docker-compose.prod.yml avec secrets*
 - [ ] Reverse proxy (Nginx ou Traefik)
 - [ ] HTTPS avec Let's Encrypt
 - [ ] CI/CD avec GitHub Actions
-- [ ] Variables d'environnement sécurisées
+- [x] Variables d'environnement sécurisées — *Docker secrets configurés*
 
 ### Phase 7 : Hébergement projets annexes
 - [ ] Containeriser les projets LAMP existants
@@ -239,16 +243,45 @@ Les échanges dans Claude Code peuvent rester en français.
 
 **Phase 3 — Frontend Angular : Afficher les projets**
 
-L'API backend est fonctionnelle ! Maintenant on passe au frontend :
+L'API backend est fonctionnelle et l'environnement est production-ready ! Maintenant on passe au frontend :
 
 1. **Service HTTP** pour appeler l'API
 2. **Composant ProjectCard** — afficher une carte de projet
 3. **Page Projects** — lister tous les projets depuis l'API
-4. **Intégration Docker** — frontend + backend + MySQL ensemble
-5. **Styling & responsive** — SCSS mobile-first
+4. **Styling & responsive** — SCSS mobile-first
 
 Objectif : afficher les 3 projets depuis l'API dans des cartes visuellement attrayantes.
 
 ---
 
-*Dernière mise à jour : Décembre 2025 — Phase 2 complétée (Backend API CRUD)*
+## 📝 Notes techniques importantes
+
+### Environment Variables Architecture (Décembre 2025)
+
+**Structure finale implémentée :**
+```
+backend/
+  .env            # Docker Compose (committed with dev-safe values)
+  .env.local      # Local npm run dev (gitignored)
+  .env.example    # Template (committed)
+```
+
+**Principes clés :**
+- **Dev local** : `npm run dev` charge `backend/.env.local` via dotenv
+- **Dev Docker** : Compose utilise `backend/.env` via `env_file:`
+- **Production** : Docker secrets montés dans `/run/secrets/` (lecture via `secrets.ts`)
+- **Frontend** : Runtime config injection via `generate-config.sh` → `config.js` (build once, deploy anywhere)
+
+**Leçons apprennées :**
+- MySQL auto-escape les underscores dans `MYSQL_DATABASE` lors de la création de users → éviter les `_` dans les noms de DB
+- `env_file:` dans docker-compose ne permet pas la substitution `${}` dans `environment:` → hardcoder les valeurs pour MySQL
+- SSL désactivé pour réseau Docker interne (même serveur) est sécurisé
+- Angular `environment.ts` = build-time → utiliser runtime injection pour vraie flexibilité
+
+**Documentation complète :**
+- Setup & troubleshooting : [docs/SETUP.md](docs/SETUP.md)
+- Secrets management guide : [docs/technical/secrets-management-guide.md](docs/technical/secrets-management-guide.md)
+
+---
+
+*Dernière mise à jour : 3 Décembre 2025 — Phase 2 complétée + Environment refactoring*

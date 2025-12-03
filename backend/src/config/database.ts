@@ -1,22 +1,16 @@
 import mysql from 'mysql2/promise';
 
-/**
- * Database configuration from environment variables
- */
-function getRequiredEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-}
+import { getSecret } from './secrets';
 
+/**
+ * Database configuration from environment variables or Docker secrets
+ */
 const dbConfig = {
-  host: getRequiredEnv('DB_HOST'),
-  port: parseInt(getRequiredEnv('DB_PORT'), 10),
-  user: getRequiredEnv('DB_USER'),
-  password: getRequiredEnv('DB_PASSWORD'),
-  database: getRequiredEnv('DB_NAME'),
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '3306', 10),
+  user: getSecret('db_user', 'DB_USER'),
+  password: getSecret('db_password', 'DB_PASSWORD'),
+  database: getSecret('db_name', 'DB_NAME'),
 };
 
 /**
@@ -28,7 +22,8 @@ export const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-});
+  // TODO: chekc if really safe before prod
+})
 
 /**
  * Test database connection
