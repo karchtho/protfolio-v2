@@ -13,6 +13,8 @@ if (result.error) {
 import express from 'express';
 
 // eslint-disable-next-line import/first -- Must load dotenv before other imports
+import { testConnection } from './config/database';
+// eslint-disable-next-line import/first -- Must load dotenv before other imports
 import projectRouter from './routes/projects.routes';
 
 const app = express();
@@ -28,6 +30,17 @@ app.get('/api/health', (_req, res) => {
 // Routes
 app.use('/api/projects', projectRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
+// Test database connection before starting server
+testConnection()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Failed to start server due to database connection error:', error);
+    process.exit(1);
+  });

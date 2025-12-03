@@ -14,7 +14,7 @@ export class ProjectsController {
     try {
       const projects = await this.service.getAllProjects();
       res.json({
-        succes: true,
+        success: true,
         data: projects,
         message: 'Projects retrieved successfully',
       });
@@ -79,7 +79,7 @@ export class ProjectsController {
         const project = await this.service.updateProject(id, input);
 
         res.json({
-            succes: true,
+            success: true,
             data: project,
             message: 'Project updated successfully',
         });
@@ -98,11 +98,11 @@ export class ProjectsController {
         await this.service.deleteProject(id);
 
         res.json({
-            succes:true,
+            success:true,
             message: 'Project deleted successfully',
         });
     } catch (error) {
-        const message = error instanceof Error ? error.message : 'Faield to delete project';
+        const message = error instanceof Error ? error.message : 'Failed to delete project';
         res.status(400).json({
             success: false,
             error: message,
