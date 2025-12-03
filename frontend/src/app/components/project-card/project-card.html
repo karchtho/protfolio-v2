@@ -10,8 +10,8 @@
         <p class="project-card__description">{{ project().description }}</p>
 
         <div class="project-card__technologies">
-          @for (tech of project().tags; track tech) {
-            <span class="tech-badge">{{ tech }}</span>
+          @for (tag of project().tags; track tag) {
+            <span class="tech-badge">{{ tag }}</span>
           }
         </div>
 

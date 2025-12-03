@@ -12,35 +12,35 @@
   // ---------------------------------------------------------------------------
   // PRIMARY COLORS - Core brand colors
   // ---------------------------------------------------------------------------
-  
+
   // Primary Blue - Main brand color
-  --color-primary-light: oklch(0.461 0.534 292.8);  // #2563EB
-  --color-primary-dark: oklch(0.556 0.445 285.2);   // #3B82F6
-  
+  --color-primary-light: oklch(0.5461 0.2152 262.88);  // #2563EB
+  --color-primary-dark: oklch(0.6231 0.188 259.81);   // #3B82F6
+
   // Accent Red - Secondary brand color
-  --color-accent-light: oklch(0.634 0.519 46.5);    // #FF6B35
-  --color-accent-dark: oklch(0.697 0.38 43.8);      // #FF8A65
-  
+  --color-accent-light: oklch(0.7045 0.1926 39.23);    // #FF6B35
+  --color-accent-dark: oklch(0.7546 0.1512 38.26);      // #FF8A65
+
   // ---------------------------------------------------------------------------
   // NEUTRAL COLORS - Grayscale palette
   // ---------------------------------------------------------------------------
-  
+
   // Pure white/black
   --color-white: oklch(1 0 0);                      // #FFFFFF
   --color-black: oklch(0 0 0);                      // #000000
-  
+
   // Light theme neutrals
-  --color-neutral-50: oklch(0.982 0.008 255.6);     // #F8FAFC - Surface
-  --color-neutral-100: oklch(0.965 0 158.2);        // #F5F5F5 - Background2
-  --color-neutral-200: oklch(0.918 0.031 263.5);    // #E2E8F0 - Border
-  --color-neutral-400: oklch(0.483 0.097 268.7);    // #64748B - Text secondary
-  --color-neutral-900: oklch(0.164 0.087 274.7);    // #1E293B - Text primary
-  
+  --color-neutral-50: oklch(0.9842 0.0034 247.86);     // #F8FAFC - Surface
+  --color-neutral-100: oklch(0.9702 0 0);              // #F5F5F5 - Background2
+  --color-neutral-200: oklch(0.9288 0.0126 255.51);    // #E2E8F0 - Border
+  --color-neutral-400: oklch(0.5544 0.0407 257.42);    // #64748B - Text secondary
+  --color-neutral-900: oklch(0.2795 0.0368 260.03);    // #1E293B - Text primary
+
   // Dark theme neutrals
-  --color-neutral-950: oklch(0.043 0 158.2);        // #0F0F0F - Background2 dark
-  --color-neutral-925: oklch(0.08 0.096 283.3);     // #0F172A - Background1 dark
-  --color-neutral-850: oklch(0.164 0.087 274.7);    // #1E293B - Surface dark
-  --color-neutral-750: oklch(0.271 0.092 270.5);    // #334155 - Border dark
-  --color-neutral-550: oklch(0.665 0.084 266.7);    // #94A3B8 - Text secondary dark
-  --color-neutral-150: oklch(0.963 0.016 255.8);    // #F1F5F9 - Text primary dark
+  --color-neutral-950: oklch(0.1684 0 0);        // #0F0F0F - Background2 dark
+  --color-neutral-925: oklch(0.2077 0.0398 265.75);     // #0F172A - Background1 dark
+  --color-neutral-850: oklch(0.2795 0.0368 260.03);    // #1E293B - Surface dark
+  --color-neutral-750: oklch(0.3717 0.0392 257.29);    // #334155 - Border dark
+  --color-neutral-550: oklch(0.7107 0.0351 256.79);    // #94A3B8 - Text secondary dark
+  --color-neutral-150: oklch(0.9683 0.0069 247.9);    // #F1F5F9 - Text primary dark
 }
