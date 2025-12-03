@@ -5,7 +5,7 @@
     id: number;
     title: string;
     description: string;
-    technologies: string[];
+    tags: string[];
     github_url?: string;
     demo_url?: string;
     image_url?: string;
@@ -19,7 +19,7 @@
   export interface CreateProjectDto {
     title: string;
     description: string;
-    technologies: string[];
+    tags: string[];
     github_url?: string;
     demo_url?: string;
     image_url?: string;
@@ -31,7 +31,7 @@
   export interface UpdateProjectDto {
     title?: string;
     description?: string;
-    technologies?: string[];
+    tags?: string[];
     github_url?: string;
     demo_url?: string;
     image_url?: string;
