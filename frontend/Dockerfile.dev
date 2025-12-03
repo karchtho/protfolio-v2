@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy Angular config files (needed for ng serve to work)
-COPY angular.json tsconfig.json tsconfig.app.json tsconfig.spec.json ./
+COPY angular.json tsconfig.json tsconfig.app.json tsconfig.spec.json proxy.conf.json ./
 
 # Source code is mounted via volume, not copied
 # This allows hot-reload to work properly
