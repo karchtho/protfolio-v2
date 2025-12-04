@@ -2,17 +2,17 @@ INSERT INTO projects (name, description, url, github_url, image_url, tags, statu
 (
   'Portfolio Website',
   'A modern full-stack portfolio built with Angular and Express. Showcases projects and blog posts.',
-  'https://thomasportfolio.com',
+  'https://karcherthomas.com',
   'https://github.com/karchtho/portfolio-v2',
   'https://picsum.photos/800?random=1',
   JSON_ARRAY('Angular', 'Express', 'MySQL', 'Docker'),
   'active'
 ),
 (
-  'E-commerce Platform',
+  'Videogame',
   'Complete e-commerce solution with cart, checkout, and payment integration.',
-  'https://shopify-clone.com',
-  'https://github.com/thomas/shopify-clone',
+  'https://yvalis-studio.itch.io/snaposaurus',
+  'https://github.com/Yvalis-Studio/Snaposaurus',
   'https://picsum.photos/800?random=2',
   JSON_ARRAY('React', 'Node.js', 'Stripe', 'PostgreSQL'),
   'active'
