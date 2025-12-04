@@ -123,9 +123,10 @@ portfolio/
 - [ ] Page détail d'un projet (avec carousel d'images)
 - [ ] Tests des composants avec Vitest
 
-### Phase 3.5 : Layout & Navigation (EN COURS)
+### Phase 3.5 : Layout & Navigation ✅
 - [x] Composant Layout (wrapper avec navbar + router-outlet + footer)
-- [ ] Navbar component (navigation + theme toggle + responsive menu)
+- [x] Navbar component (navigation + theme toggle iOS-style slider)
+- [ ] Mobile responsive menu (hamburger)
 - [ ] Footer component (copyright + social links)
 - [ ] Page Home (hero section + featured projects + CTA)
 
@@ -185,11 +186,15 @@ Les échanges dans Claude Code peuvent rester en français.
 - Services injectés via `inject()` plutôt que constructor DI
 - Tests avec **Vitest** (intégré par défaut dans CLI v21)
 
-### SCSS
-- Variables dans `_variables.scss`
+### SCSS & Design System
+- **TOUJOURS utiliser les tokens de couleur** (`--primary`, `--text-secondary`, etc.) — jamais de couleurs hardcodées
+- **Respecter la charte graphique** : typographie (Poppins, Source Sans 3), tailles, weights
+- **Theme-aware** : les variables CSS changent automatiquement selon `data-theme` (light/dark)
+- Variables dans `_tokens.scss` et `_themes.scss`
 - Mixins réutilisables dans `_mixins.scss`
 - Approche BEM pour le nommage des classes
 - Mobile-first (media queries min-width)
+- **Documentation** : voir `docs/technical/style-system/` pour les guidelines
 
 ### Express / Node
 - Architecture en couches : routes → controllers → services → repositories
@@ -251,23 +256,25 @@ Les échanges dans Claude Code peuvent rester en français.
 
 ## 🚀 Prochaine étape
 
-**Phase 3.5 — Layout & Navigation : Navbar + Footer + Home**
+**Phase 3.5 — Layout & Navigation : Footer + Home**
 
-Layout component créé avec routing parent/children ! Prochaines étapes :
+Navbar complète avec theme switcher ! Prochaines étapes :
 
-1. **Navbar component** — navigation links + theme toggle + mobile menu
-2. **Footer component** — copyright + social links
-3. **Page Home** — hero section + featured projects + CTA
-4. **Refactoring** — optimiser Projects page avec effects au lieu de OnInit
+1. **Footer component** — copyright + social links
+2. **Page Home** — hero section + featured projects + CTA
+3. **Mobile hamburger menu** — responsive navbar (optionnel pour v1)
 
-**État actuel :**
-- ✅ Layout wrapper (navbar + router-outlet) en place
-- ✅ Routing restructuré avec lazy loading
-- ⏳ Navbar est un stub vide (à implémenter)
+**État actuel (Décembre 4, 2025) :**
+- ✅ Layout wrapper (navbar + router-outlet + footer placeholder)
+- ✅ Routing restructuré avec lazy loading (parent/children)
+- ✅ **Navbar complète** : logo, nav links (active state), theme slider iOS-style
+- ✅ Theme switcher fonctionnel (light/dark toggle)
 - ❌ Footer n'existe pas encore
 - ❌ Page Home n'existe pas encore
 
-Objectif : compléter la structure de navigation et créer la page d'accueil.
+**Documentation navbar :** voir `docs/technical/style-system/navbar-implementation.md`
+
+Objectif : compléter Footer et créer la page d'accueil Home.
 
 ---
 
@@ -345,7 +352,7 @@ CREATE TABLE projects (
 - ✅ **Button** — variant system (primary/secondary/ghost), sizes, routing/href support
 - ✅ **ProjectCard** — affichage projet avec thumbnail, description, tech badges, links
 - ✅ **Layout** — wrapper global avec navbar + router-outlet + footer placeholder
-- ⚠️ **Navbar** — stub vide (à implémenter)
+- ✅ **Navbar** — navigation links avec active state + theme slider iOS-style
 
 **Pages créées :**
 - ✅ **Projects** — liste tous les projets depuis l'API avec loading/error states
@@ -364,8 +371,9 @@ CREATE TABLE projects (
 
 **Routing :**
 - ✅ Layout parent avec children routes (lazy loading)
-- ✅ `/projects` opérationnel
-- ⚠️ `/home` configuré mais page non créée
+- ✅ `/home` — route configurée (page à créer)
+- ✅ `/projects` — page opérationnelle
+- ✅ `/about` — route configurée (page placeholder)
 
 ### Backend (Node.js + Express)
 - ✅ CRUD projects complet (GET /api/projects, GET /api/projects/:id)
@@ -381,4 +389,61 @@ CREATE TABLE projects (
 
 ---
 
-*Dernière mise à jour : 4 Décembre 2025 — Phase 3.5 en cours (Layout créé, Navbar à implémenter)*
+
+You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
+
+## TypeScript Best Practices
+
+- Use strict type checking
+- Prefer type inference when the type is obvious
+- Avoid the `any` type; use `unknown` when type is uncertain
+
+## Angular Best Practices
+
+- Always use standalone components over NgModules
+- Must NOT set `standalone: true` inside Angular decorators. It's the default in Angular v20+.
+- Use signals for state management
+- Implement lazy loading for feature routes
+- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
+- Use `NgOptimizedImage` for all static images.
+  - `NgOptimizedImage` does not work for inline base64 images.
+
+## Accessibility Requirements
+
+- It MUST pass all AXE checks.
+- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
+
+### Components
+
+- Keep components small and focused on a single responsibility
+- Use `input()` and `output()` functions instead of decorators
+- Use `computed()` for derived state
+- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
+- Prefer inline templates for small components
+- Prefer Reactive forms instead of Template-driven ones
+- Do NOT use `ngClass`, use `class` bindings instead
+- Do NOT use `ngStyle`, use `style` bindings instead
+- When using external templates/styles, use paths relative to the component TS file.
+
+## State Management
+
+- Use signals for local component state
+- Use `computed()` for derived state
+- Keep state transformations pure and predictable
+- Do NOT use `mutate` on signals, use `update` or `set` instead
+
+## Templates
+
+- Keep templates simple and avoid complex logic
+- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
+- Use the async pipe to handle observables
+- Do not assume globals like (`new Date()`) are available.
+- Do not write arrow functions in templates (they are not supported).
+
+## Services
+
+- Design services around a single responsibility
+- Use the `providedIn: 'root'` option for singleton services
+- Use the `inject()` function instead of constructor injection
+
+*Dernière mise à jour : 4 Décembre 2025 — Phase 3.5 en cours (Navbar ✅, Footer et Home à faire)*

@@ -31,13 +31,16 @@ export class ThemeService {
    * Computed current active theme (light or dark)
    * Useful when you need to know the actual applied theme
    */
-  readonly activeTheme = signal<'light' | 'dark'>(this.getActiveTheme());
+  readonly activeTheme = signal<'light' | 'dark'>('light');
 
   constructor() {
     this.mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     // Apply initial theme
     this.applyTheme(this.theme());
+
+    // Maintenant qu'on a mediaQuery, on peut calculer activeTheme
+    this.activeTheme.set(this.getActiveTheme());
 
     // Setup system preference listener
     this.setupMediaQueryListener();

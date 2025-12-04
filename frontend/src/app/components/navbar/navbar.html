@@ -1,1 +1,37 @@
-<p>navbar works!</p>
+<nav class="navbar">
+  <!-- Logo -->
+  <div class="navbar-brand">
+    <a routerLink="/" class="logo">< Thomas Karcher /></a>
+  </div>
+
+  <!-- Navigation links -->
+  <ul class="navbar-links">
+    @for (item of navItems; track item.path) {
+    <li>
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+      >
+        {{ item.label }}
+      </a>
+    </li>
+    }
+  </ul>
+
+  <!-- Theme Switcher (Slider) -->
+  <div class="theme-switcher">
+    <span class="theme-icon sun"> ☀️ </span>
+    <label for="theme-toggle" class="switch">
+      <input
+        type="checkbox"
+        id="theme-toggle"
+        [checked]="isDark()"
+        (change)="onThemeToggle()"
+        aria-label="Toggle theme"
+      />
+      <span class="slider"></span>
+    </label>
+    <span class="theme-icon moon"> 🌙 </span>
+  </div>
+</nav>
