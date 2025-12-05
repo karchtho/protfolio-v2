@@ -25,7 +25,7 @@ INSERT INTO projects (
 ),
 (
   'Snaposaurus',
-  'A dinosaur safari photography game built in 72 hours with a 9-person team. My first Unity project — I worked on UI systems, gameplay mechanics, and team coordination.',
+  'A dinosaur safari photography game built in 72 hours with a 9-person team. My first Unity project. I worked on UI systems, gameplay mechanics, and team coordination.',
   'https://yvalis-studio.itch.io/snaposaurus',
   'https://github.com/Yvalis-Studio/Snaposaurus',
   'uploads/projects/snaposaurus-main.webp',
