@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 
 import { Project } from '../../models/project.model';
+import { ConfigService} from '../../services/config.service';
 import { Button } from '../button/button';
 
 /**
@@ -15,9 +16,19 @@ import { Button } from '../button/button';
   styleUrl: './project-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectCardComponent {
+export class ProjectCard{
+  private configService = inject(ConfigService);
+
   /**
    * Project data as required input signal
    */
   project = input.required<Project>();
+
+  /**
+   * Constructs full image URL from relative path
+   */
+
+  getImageUrl(path: string): string {
+    return `${this.configService.apiUrl}/${path}`;
+  }
 }
