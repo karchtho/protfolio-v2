@@ -6,6 +6,8 @@
     name: string;
     description: string;
     tags: string[];
+    thumbnail?: string; // 👈 AJOUTER
+    images?: string[];
     url?: string;
     github_url?: string;
     image_url?: string;

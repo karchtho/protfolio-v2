@@ -27,6 +27,9 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
+//Serve static files for uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Routes
 app.use('/api/projects', projectRouter);
 

@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
     @if (routerLink()) {
     <a [routerLink]="routerLink()" [class]="buttonClass()">{{ label() }}</a>
     } @else if (href()) {
-    <a [href]="href()" [class]="buttonClass()" [target]="externalTarget()" [rel]="externalRel()">{{
+    <a [href]="href()" [class]="buttonClass()" [attr.target]="externalTarget()" [attr.rel]="externalRel()">{{
       label()
     }}</a>
     } @else {

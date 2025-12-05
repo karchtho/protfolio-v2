@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { ProjectCardComponent } from '../../components/project-card/project-card';
+import { ProjectCard } from '../../components/project-card/project-card';
 import { ProjectsService } from '../../services/projects.service';
 
 @Component({
   selector: 'app-projects',
-  imports: [ProjectCardComponent],
+  imports: [ProjectCard],
   templateUrl: './projects.html',
   styleUrl: './projects.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

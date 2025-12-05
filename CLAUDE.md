@@ -113,13 +113,15 @@ portfolio/
 ### Phase 3 : Frontend Angular ✅
 - [x] Comprendre les standalone components
 - [x] Composant Button réutilisable (variant system, SCSS modulaire)
-- [x] Composant ProjectCard (affichage des projets)
+- [x] Composant ProjectCard (affichage des projets avec thumbnail)
 - [x] Routing avec lazy loading (Layout parent + children routes)
 - [x] Service HTTP pour appeler l'API (ProjectsService avec HttpClient)
 - [x] Signals pour la gestion d'état (projects, loading, error signals)
 - [x] Afficher la liste des projets depuis l'API (Projects page opérationnelle)
 - [x] Theme Service (light/dark/auto avec localStorage)
-- [ ] Page Home (hero + featured projects)
+- [x] Page Home (hero + featured projects + Skills section)
+- [x] SkeletonCard component (loading states)
+- [x] SkillBadge component (code-styled badges)
 - [ ] Page détail d'un projet (avec carousel d'images)
 - [ ] Tests des composants avec Vitest
 
@@ -128,12 +130,15 @@ portfolio/
 - [x] Navbar component (navigation + theme toggle iOS-style slider)
 - [x] Footer component (copyright + social links)
 - [x] **Code refactoring** : OnPush partout, `:host { display: block }`, breakpoints centralisés, prefers-reduced-motion
+- [x] Page Home (hero section + featured projects + Skills section + scroll anchors)
 - [ ] Mobile responsive menu (hamburger)
-- [ ] Page Home (hero section + featured projects + CTA) — **PROCHAINE ÉTAPE**
 
 ### Phase 4 : Intégration & Style
 - [x] Connexion front ↔ back (environnements, proxy dev)
 - [x] Architecture SCSS (tokens OKLCH, themes, utilities) — *Système complet implémenté*
+- [x] **DB schema images** : colonnes `thumbnail` + `images` JSON, seeds avec placeholders
+- [x] **Volume Docker uploads** : persistance configurée dans docker-compose
+- [ ] **Backend upload API** : Multer + routes POST/DELETE + validation (À FAIRE)
 - [ ] Design responsive mobile-first
 - [ ] Animations de base
 
@@ -284,10 +289,11 @@ Les échanges dans Claude Code peuvent rester en français.
 - ✅ **SkillBadge component** : badges code-styled pour compétences techniques
 
 **Prochaines étapes :**
-1. **Architecture images backend** — upload, stockage, serving (Multer + volume Docker)
-2. **Seeds avec vraies images** — peupler les projets avec des images réelles
+1. **Backend upload API** — Multer + routes POST/DELETE + file-type validation + Express static serving
+2. **Seeds avec vraies images** — ajouter de vraies images via l'API
 3. **Contact form** — formulaire + backend endpoint
-4. **Mobile hamburger menu** — responsive navbar (optionnel pour v1)
+4. **Page Project Detail** — carousel d'images, description complète
+5. **Mobile hamburger menu** — responsive navbar (optionnel pour v1)
 
 **Documentation :**
 - Navbar : `docs/technical/style-system/navbar-implementation.md`
@@ -323,23 +329,23 @@ backend/
 - Setup & troubleshooting : [docs/SETUP.md](docs/SETUP.md)
 - Secrets management guide : [docs/technical/secrets-management-guide.md](docs/technical/secrets-management-guide.md)
 
-### Gestion des images (Décembre 2025)
+### Gestion des images (Décembre 2025) — EN COURS
 
 **Stratégie retenue : Stockage fichier local + chemin DB**
 
-**Architecture :**
+**Architecture prévue :**
 - Images uploadées → `backend/uploads/projects/`
 - DB stocke les chemins relatifs dans colonne JSON `images`
 - Une image `thumbnail` principale pour les cards
 - Galerie d'images pour le carousel sur page détail
 
-**Stack technique :**
-- **Multer** (middleware Express pour upload multipart/form-data)
-- Volume Docker `uploads-data` pour persistance
-- Route statique Express : `/uploads` → `backend/uploads/`
+**Stack technique prévu :**
+- **Multer** (middleware Express pour upload multipart/form-data) — À INSTALLER
+- Volume Docker `uploads-data` pour persistance — ✅ CONFIGURÉ
+- Route statique Express : `/uploads` → `backend/uploads/` — À CRÉER
 - Limite : 5 MB par image, formats JPEG/PNG/WebP/GIF
 
-**Structure SQL :**
+**Structure SQL :** ✅ IMPLÉMENTÉE
 ```sql
 CREATE TABLE projects (
   ...
@@ -349,12 +355,32 @@ CREATE TABLE projects (
 );
 ```
 
+**État actuel :**
+- ✅ DB schema avec `thumbnail` + `images` JSON
+- ✅ Volume Docker `uploads-data` configuré (dev + prod)
+- ✅ Seeds avec placeholder images
+- ✅ ProjectCard affiche le thumbnail
+- ❌ Multer non installé
+- ❌ Routes upload non créées
+- ❌ Express static serving non configuré
+
 **Workflow prévu :**
 1. Admin drag & drop des images
 2. Upload via POST `/api/upload/projects` (retourne les chemins)
 3. Frontend récupère les chemins et les stocke en créant/éditant le projet
 4. Cards affichent `thumbnail`
 5. Page détail affiche carousel avec toutes les `images`
+
+**Endpoints à créer :**
+- `POST /api/upload/projects` — upload 1-5 images, retourne `{ paths: string[] }`
+- `GET /uploads/projects/:filename` — serve images statiques
+- `DELETE /api/upload/projects/:filename` — suppression sécurisée (path traversal protection)
+
+**Sécurité à implémenter :**
+- Validation MIME type (magic bytes via `file-type`)
+- Noms de fichiers sanitized (UUID + extension)
+- Protection path traversal sur DELETE
+- Volume Docker isolé du code source
 
 **Alternatives considérées (non retenues pour v1) :**
 - Base64 en DB → gonfle la DB, mauvaises performances
@@ -404,9 +430,11 @@ CREATE TABLE projects (
 ### Backend (Node.js + Express)
 - ✅ CRUD projects complet (GET /api/projects, GET /api/projects/:id, GET /api/projects/featured)
 - ✅ MySQL avec mysql2 (connexions pool)
-- ✅ Migrations + seeds fonctionnels
+- ✅ Migrations + seeds fonctionnels (avec placeholder images)
 - ✅ Docker secrets support (production-ready)
-- ❌ Architecture upload images (Multer + volume Docker) — **PROCHAINE ÉTAPE**
+- ✅ **DB schema images** : colonnes `thumbnail` + `images` JSON array
+- ✅ **Volume Docker uploads** : `uploads-data` configuré pour persistance
+- ❌ **Upload API** : Multer + routes POST/DELETE à implémenter — **PROCHAINE ÉTAPE**
 
 ### Infrastructure
 - ✅ Docker Compose dev + prod
@@ -473,4 +501,4 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
 
-*Dernière mise à jour : 5 Décembre 2025 — Phase 3.5 terminée (Home page ✅, Skills section ✅) — Phase 4 en cours (architecture images)*
+*Dernière mise à jour : 5 Décembre 2025 — Phase 3.5 terminée (Home page ✅, Skills section ✅) — Phase 4 : DB schema images ✅, upload API backend à implémenter*

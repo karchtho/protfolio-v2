@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RouterLink } from '@angular/router';
 
 import { Button } from '../../components/button/button';
-import { ProjectCardComponent } from '../../components/project-card/project-card';
+import { ProjectCard } from '../../components/project-card/project-card';
 import { SkeletonCard } from "../../components/skeleton-card/skeleton-card";
 import { SkillBadge } from '../../components/skill-badge/skill-badge';
 import { ProjectsService } from '../../services/projects.service';
 
 @Component({
   selector: 'app-home',
-  imports: [NgOptimizedImage, Button, RouterLink, ProjectCardComponent, SkeletonCard, SkillBadge],
+  imports: [NgOptimizedImage, Button, RouterLink, ProjectCard, SkeletonCard, SkillBadge],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
