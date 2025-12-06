@@ -33,12 +33,14 @@ jobs:
       # 2. Setup SSH key
       # ──────────────────────────────────────────
       - name: Setup SSH key
+
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
       - name: Add server to known hosts
         run: ssh-keyscan -H ${{ secrets.VPS_SSH_HOST }} >> ~/.ssh/known_hosts
+
 
       # ──────────────────────────────────────────
       # 3. Deploy to VPS
@@ -49,7 +51,9 @@ jobs:
           SSH_USER: ${{ secrets.VPS_SSH_USER }}
           PROJECT_PATH: ${{ secrets.VPS_PROJECT_PATH }}
         run: |
+
           ssh -o StrictHostKeyChecking=accept-new $SSH_USER@$SSH_HOST << 'ENDSSH'
+
             set -e  # Exit on error
 
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -124,4 +128,6 @@ jobs:
           else
             echo "⚠️  API health check failed (HTTP $API_STATUS)"
             # Don't fail deployment if API health endpoint doesn't exist yet
+
           fi
+
