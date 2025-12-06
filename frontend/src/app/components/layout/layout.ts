@@ -11,4 +11,6 @@ import { Navbar } from '../navbar/navbar';
   styleUrl: './layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Layout {}

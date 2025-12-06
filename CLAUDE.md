@@ -95,7 +95,7 @@ portfolio/
 - [x] Initialiser le projet Node/Express backend avec TypeScript
 - [x] Setup Docker (Dockerfiles + docker-compose avec MySQL)
 - [x] Vérifier que tout tourne en local
-- [ ] Premier test qui passe (front + back) — *À valider*
+- [x] Premier test qui passe (front + back) — *À valider*
 
 ### Phase 2 : Backend API ✅
 - [x] Structure Express (routes, controllers, services, repositories)
@@ -150,8 +150,8 @@ portfolio/
 
 ### Phase 6 : Déploiement OVH
 - [x] Docker Compose production optimisé — *docker-compose.prod.yml avec secrets*
-- [ ] Reverse proxy (Nginx ou Traefik)
-- [ ] HTTPS avec Let's Encrypt
+- [x] Reverse proxy (Nginx ou Traefik)
+- [x] HTTPS avec Let's Encrypt
 - [ ] CI/CD avec GitHub Actions
 - [x] Variables d'environnement sécurisées — *Docker secrets configurés*
 

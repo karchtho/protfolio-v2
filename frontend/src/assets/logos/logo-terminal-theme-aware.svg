@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" fill="none">
+  <!-- Terminal cursor logo - THEME-AWARE VERSION -->
+  <!-- This version works when INLINED in HTML (not as <img src="">) -->
+  <!-- Colors adapt automatically to your light/dark theme -->
+
+  <style>
+    /* Use your design tokens */
+    .prompt { stroke: var(--accent, #FF6B35); }
+    .text { stroke: var(--text-primary, #1E293B); }
+    .cursor {
+      fill: var(--primary, #2563EB);
+      animation: cursor-blink 1.2s step-end infinite;
+    }
+
+    @keyframes cursor-blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <!-- Terminal prompt > (orange accent) -->
+  <path
+    class="prompt"
+    d="M 15 30 L 35 40 L 15 50"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- TK_ text -->
+  <!-- T -->
+  <line class="text" x1="50" y1="25" x2="80" y2="25" stroke-width="6" stroke-linecap="round"/>
+  <line class="text" x1="65" y1="25" x2="65" y2="55" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- K -->
+  <line class="text" x1="90" y1="25" x2="90" y2="55" stroke-width="6" stroke-linecap="round"/>
+  <line class="text" x1="90" y1="40" x2="110" y2="25" stroke-width="6" stroke-linecap="round"/>
+  <line class="text" x1="90" y1="40" x2="110" y2="55" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Underscore _ -->
+  <line class="text" x1="120" y1="55" x2="140" y2="55" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Blinking cursor (blue primary) -->
+  <rect
+    class="cursor"
+    x="150"
+    y="28"
+    width="5"
+    height="28"
+    rx="1"
+  />
+</svg>

@@ -1,0 +1,181 @@
+name: CI — Tests and Validation
+
+# Déclenché sur les PRs vers main
+on:
+  pull_request:
+    branches:
+      - main
+
+# Permissions minimales (sécurité)
+permissions:
+  contents: read
+  pull-requests: write  # Pour commenter sur la PR si besoin
+
+jobs:
+  # ============================================
+  # JOB 1 : Lint Frontend
+  # ============================================
+  lint-frontend:
+    name: Lint Frontend (Angular)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      # Optionnel : vérifier le format avec Prettier
+      # - name: Check formatting
+      #   run: npm run format:check
+
+  # ============================================
+  # JOB 2 : Lint Backend
+  # ============================================
+  lint-backend:
+    name: Lint Backend (Node.js)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+  # ============================================
+  # JOB 3 : Build Frontend
+  # ============================================
+  build-frontend:
+    name: Build Frontend (Angular)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production
+
+      # Optionnel : uploader l'artefact pour inspection
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+          retention-days: 7
+
+  # ============================================
+  # JOB 4 : Build Backend
+  # ============================================
+  build-backend:
+    name: Build Backend (TypeScript)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'backend/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+  # ============================================
+  # JOB 5 : Tests Frontend (optionnel pour l'instant)
+  # ============================================
+  # test-frontend:
+  #   name: Test Frontend (Vitest)
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./frontend
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #         cache: 'npm'
+  #         cache-dependency-path: 'frontend/package-lock.json'
+  #     - run: npm ci
+  #     - run: npm test -- --run  # Vitest en mode CI
+
+  # ============================================
+  # JOB 6 : Security Audit
+  # ============================================
+  security-audit:
+    name: Security Audit (npm audit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Audit Frontend
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm audit --audit-level=moderate
+        continue-on-error: true  # Ne fait pas échouer le workflow
+
+      - name: Audit Backend
+        working-directory: ./backend
+        run: |
+          npm ci
+          npm audit --audit-level=moderate
+        continue-on-error: true
