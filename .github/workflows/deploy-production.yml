@@ -1,0 +1,134 @@
+name: Deploy to Production
+
+# Déclenché sur push vers main (après merge de PR)
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Permet de lancer manuellement depuis GitHub UI
+
+# Permissions minimales
+permissions:
+  contents: read
+
+jobs:
+  # ============================================
+  # JOB 1 : Deploy to VPS
+  # ============================================
+  deploy:
+    name: Deploy to VPS OVH
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://karcherthomas.com
+
+    steps:
+      # ──────────────────────────────────────────
+      # 1. Checkout code
+      # ──────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ──────────────────────────────────────────
+      # 2. Setup SSH key
+      # ──────────────────────────────────────────
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.VPS_SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # ──────────────────────────────────────────
+      # 3. Deploy to VPS
+      # ──────────────────────────────────────────
+      - name: Deploy application
+        env:
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+          PROJECT_PATH: ${{ secrets.VPS_PROJECT_PATH }}
+        run: |
+          ssh -i ~/.ssh/deploy_key $SSH_USER@$SSH_HOST << 'ENDSSH'
+            set -e  # Exit on error
+
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🚀 Starting deployment..."
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+            # Navigate to project directory
+            cd ${{ secrets.VPS_PROJECT_PATH }}
+
+            # Pull latest code
+            echo "📥 Pulling latest code from GitHub..."
+            git fetch origin
+            git reset --hard origin/main
+
+            # Stop services
+            echo "🛑 Stopping services..."
+            docker compose -f docker-compose.prod.yml down
+
+            # Rebuild images (important: uses local secrets/)
+            echo "🔨 Building Docker images..."
+            docker compose -f docker-compose.prod.yml build --no-cache
+
+            # Run database migrations
+            echo "🗄️  Running database migrations..."
+            docker compose -f docker-compose.prod.yml up -d mysql
+            sleep 10  # Wait for MySQL to be ready
+            # Migrations run automatically via /docker-entrypoint-initdb.d/
+
+            # Start all services
+            echo "🚀 Starting all services..."
+            docker compose -f docker-compose.prod.yml up -d
+
+            # Wait for services to be ready
+            echo "⏳ Waiting for services to be healthy..."
+            sleep 20
+
+            # Check service health
+            echo "🏥 Checking service health..."
+            docker compose -f docker-compose.prod.yml ps
+
+            # Cleanup old images
+            echo "🧹 Cleaning up old Docker images..."
+            docker image prune -f
+
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "✅ Deployment completed successfully!"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          ENDSSH
+
+      # ──────────────────────────────────────────
+      # 4. Verify deployment
+      # ──────────────────────────────────────────
+      - name: Verify deployment
+        run: |
+          echo "🔍 Verifying deployment..."
+
+          # Check if site is accessible
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://karcherthomas.com)
+
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "✅ Site is accessible (HTTP $HTTP_STATUS)"
+          else
+            echo "❌ Site returned HTTP $HTTP_STATUS"
+            exit 1
+          fi
+
+          # Check API health endpoint
+          API_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://karcherthomas.com/api/health)
+
+          if [ "$API_STATUS" -eq 200 ]; then
+            echo "✅ API is healthy (HTTP $API_STATUS)"
+          else
+            echo "⚠️  API health check failed (HTTP $API_STATUS)"
+            # Don't fail deployment if API health endpoint doesn't exist yet
+          fi
+
+      # ──────────────────────────────────────────
+      # 5. Cleanup SSH key
+      # ──────────────────────────────────────────
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
