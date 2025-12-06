@@ -1,25 +1,58 @@
-version: '3.8'
+
+# Loging management
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+networks:
+  frontend_network:
+    driver: bridge
+  backend_network:
+    driver: bridge
 
 services:
   frontend:
+    networks:
+      - frontend_network
+    logging: *default-logging
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - "80:80"
+      - "8080:80"
     environment:
       - API_URL=http://backend:3000
       - ENVIRONMENT=production
     restart: unless-stopped
     depends_on:
       - backend
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M    
 
   backend:
+    networks:
+      - frontend_network  # Can talk to frontend
+      - backend_network
+    logging: *default-logging
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"
     secrets:
       - db_user
       - db_password
@@ -34,8 +67,25 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
 
   mysql:
+    networks:
+    - backend_network
+    logging: *default-logging
     image: mysql:8.0
     secrets:
       - db_user
@@ -56,6 +106,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
 
 # TODO: Before production deployment, migrate to Docker Swarm secrets or external secret manager
 # Current file-based secrets are for initial VPS deployment only

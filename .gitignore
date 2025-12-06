@@ -41,6 +41,6 @@ backend/dist/
 frontend/node_modules/
 frontend/dist/
 frontend/.angular/
+secrets/
 
-# Docker
-.dockerignore
+setup-vps.*

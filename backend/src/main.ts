@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
+import healthRouter from './routes/health.route';
+
+
 // Load environment variables FIRST, before any other imports
 const envPath = path.resolve(__dirname, '../.env.local');
 const result = dotenv.config({ path: envPath })
@@ -23,15 +26,13 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' });
-});
-
 //Serve static files for uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Routes
 app.use('/api/projects', projectRouter);
+
+app.use('/api', healthRouter);
 
 // app.listen(PORT, () => {
 //   console.log(`Server running on http://localhost:${PORT}`);

@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.env*
+!.env.example
+dist
+.angular
+coverage
+.git
+.vscode
+.idea
+*.md
+!README.md
+.eslintcache
+.DS_Store

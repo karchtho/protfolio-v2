@@ -1,12 +1,53 @@
+# ============================================
+# STAGE 1: Build TypeScript Application
+# ============================================
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+
+# Install ALL dependencies (including devDependencies needed for TypeScript compilation)
+COPY package*.json ./
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Compile TypeScript to JavaScript
+# This creates compiled .js files in dist/
+RUN npm run build
+
+# ============================================
+# STAGE 2: Production Runtime
+# ============================================
 FROM node:24-alpine
 
 WORKDIR /app
 
+# Install ONLY production dependencies (no TypeScript, no dev tools)
 COPY package*.json ./
-RUN npm ci --only=production    # Pas de devDependencies
+RUN npm ci --only=production
 
-COPY . .
+# Copy compiled JavaScript from builder stage (NOT source .ts files)
+COPY --from=builder /app/dist ./dist
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
+# Create uploads directory with correct permissions
+# This is where uploaded project images will be stored
+RUN mkdir -p /app/uploads && chown -R nodejs:nodejs /app
+
+# Switch to non-root user (if container is compromised, attacker doesn't have root)
+USER nodejs
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+# Run node directly (faster than npm run start)
+CMD ["node", "dist/main.js"]
+
+# Metadata for image identification
+LABEL maintainer="Thomas kitadevturtle@gmail.com"
+LABEL environment="production"
+LABEL version="1.0.0"
+LABEL description="Portfolio backend API"
