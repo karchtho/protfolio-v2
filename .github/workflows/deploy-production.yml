@@ -39,8 +39,7 @@ jobs:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
       - name: Add server to known hosts
-        run: ssh-keyscan -H ${{ secrets.VPS_SSH_HOST }} >> ~/.ssh/known_hosts
-
+        run: echo "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
 
       # ──────────────────────────────────────────
       # 3. Deploy to VPS
@@ -48,12 +47,11 @@ jobs:
       - name: Deploy application
         env:
           SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
           SSH_USER: ${{ secrets.VPS_SSH_USER }}
           PROJECT_PATH: ${{ secrets.VPS_PROJECT_PATH }}
         run: |
-
-          ssh -o StrictHostKeyChecking=accept-new $SSH_USER@$SSH_HOST << 'ENDSSH'
-
+          ssh -p $SSH_PORT $SSH_USER@$SSH_HOST << 'ENDSSH'
             set -e  # Exit on error
 
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
