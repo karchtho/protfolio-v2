@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@use '../../../styles/variables' as*;
 
 :host {
   display: block;
@@ -167,7 +167,6 @@
   padding: var(--spacing-16) var(--spacing-6);
   max-width: 1200px;
   margin: 0 auto;
-  background: oklch(from var(--surface) l c h / 0.3);
 
   @media (min-width: $breakpoint-tablet) {
     padding: var(--spacing-20) var(--spacing-8);
