@@ -26,47 +26,48 @@
 </section>
 
 <!-- Featured projects section -->
+<section id="featured-projects" class="container-secondary">
+  <div class="featured-projects" >
+    <div class="featured-projects__header">
+      <h2>Featured projects</h2>
+      <p>Check out some of my best work</p>
+    </div>
+    <div class="featured-projects__grid">
+      @if (projectsService.loading()) {
+      <app-skeleton-card />
+      <app-skeleton-card />
+      <app-skeleton-card />
+      } @if (!projectsService.loading() && !projectsService.error()) { @for (project of
+      projectsService.featuredProjects(); track project.id) {
+      <app-project-card [project]="project" />
+      } }
+    </div>
+    @if (!projectsService.loading() && projectsService.error()) {
+    <p class="featured-projects__error">
+      {{ projectsService.error() }}
+    </p>
+    }
 
-<section class="featured-projects" id="featured-projects">
-  <div class="featured-projects__header">
-    <h2>Featured projects</h2>
-    <p>Check out some of my best work</p>
-  </div>
-  <div class="featured-projects__grid">
-    @if (projectsService.loading()) {
-    <app-skeleton-card />
-    <app-skeleton-card />
-    <app-skeleton-card />
-    } @if (!projectsService.loading() && !projectsService.error()) { @for (project of
-    projectsService.featuredProjects(); track project.id) {
-    <app-project-card [project]="project" />
-    } }
-  </div>
-  @if (!projectsService.loading() && projectsService.error()) {
-  <p class="featured-projects__error">
-    {{ projectsService.error() }}
-  </p>
-  }
-
-  <div class="featured-projects__actions">
-    <a routerLink="/projects" class="featured-projects__view-all">
-      View all projects
-      <svg
-        class="featured-projects__view-all-arrow"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-      >
-        <path
-          d="M6 3L11 8L6 13"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </a>
+    <div class="featured-projects__actions">
+      <a routerLink="/projects" class="featured-projects__view-all">
+        View all projects
+        <svg
+          class="featured-projects__view-all-arrow"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            d="M6 3L11 8L6 13"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
   </div>
 </section>
 
