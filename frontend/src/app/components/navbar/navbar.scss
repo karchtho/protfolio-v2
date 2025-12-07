@@ -19,7 +19,9 @@
   box-shadow: var(--shadow-sm);
 
   @media (max-width: $breakpoint-mobile) {
-      grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto; // Logo | Hamburger
+    padding: 1rem;
+    gap: 1rem;
   }
 
   // Animation au scroll (disabled if user prefers reduced motion)
@@ -74,59 +76,56 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Animation: Glassmorphism au scroll
+  // Animations
   // ---------------------------------------------------------------------------
   @keyframes navbar-scroll {
     to {
-      // Fond semi-transparent avec blur
       background: oklch(from var(--surface) l c h / 0.7);
       backdrop-filter: blur(12px) saturate(180%);
       -webkit-backdrop-filter: blur(12px) saturate(180%);
-
-      // Bordure subtile
       border-bottom: 1px solid oklch(from var(--border-default) l c h / 0.5);
-
-      // Ombre plus marquée (multi-layer pour depth)
       box-shadow:
         0 8px 32px oklch(from var(--color-black) l c h / 0.15),
         inset 0 1px 0 oklch(from var(--surface) l c h / 0.8),
         inset 0 -1px 0 oklch(from var(--surface) l c h / 0.2);
-
-      // Padding réduit (navbar plus compacte)
       padding: var(--spacing-2) var(--spacing-16);
     }
   }
 
-  // Animation pour les bordures brillantes
   @keyframes navbar-glow {
     from {
       opacity: 0;
     }
-
     to {
       opacity: 1;
     }
   }
 
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
   // ---------------------------------------------------------------------------
-  // Logo / Brand - h3 style (Poppins 600, 30px)
+  // Logo / Brand
   // ---------------------------------------------------------------------------
   &__brand {
     justify-self: start;
   }
 
-  // &__logo {
-  //   color: var(--text-primary);
-  //   font-family: 'Poppins', sans-serif;
-  //   font-size: 1.750rem;
-  //   font-weight: 600;
-  //   line-height: 2.5rem;
-  //   text-decoration: none;
-  //   transition: color 0.4s ease;
-
-  //   &:hover {
-  //     color: var(--primary);
-  //   }
   &__logo {
     .terminal-logo {
       width: 200px;
@@ -138,10 +137,15 @@
       }
     }
 
+    @media (max-width: $breakpoint-mobile) {
+      .terminal-logo {
+        width: 120px;
+      }
+    }
   }
 
   // ---------------------------------------------------------------------------
-  // Navigation Links - Paragraphe style (Source Sans 3, 16px)
+  // Navigation Links
   // ---------------------------------------------------------------------------
   &__links {
     list-style: none;
@@ -202,6 +206,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--spacing-2);
+      margin-bottom: calc(var(--spacing-12) - var(--spacing-4));
 
       li {
         width: 100%;
@@ -230,222 +235,23 @@
     }
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideIn {
-    from {
-      transform: translateX(100%);
-    }
-
-    to {
-      transform: translateX(0);
-    }
-  }
-
   // ---------------------------------------------------------------------------
-  // Theme Switcher Container
+  // Theme Switcher (component wrapper positioning)
   // ---------------------------------------------------------------------------
   &__theme-switcher {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
     justify-self: end;
 
-    // When dark mode is active (checked), swap the states
-    &:has(input:checked) {
-      .navbar__theme-option:first-child {
-        .navbar__theme-icon {
-          opacity: 0.4;
-        }
-
-        .navbar__theme-label {
-          opacity: 0.5;
-        }
-      }
-
-      .navbar__theme-option:last-child {
-        .navbar__theme-icon {
-          opacity: 1;
-        }
-
-        .navbar__theme-label {
-          opacity: 1;
-        }
+    // Desktop version: shown in navbar
+    &--desktop {
+      @media (max-width: $breakpoint-mobile) {
+        display: none; // Hidden on mobile
       }
     }
 
-    @media (max-width: $breakpoint-mobile) {
-      display: none; // Hidden on mobile (use mobile toggle instead)
-    }
-  }
-
-  &__theme-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  &__theme-icon {
-    display: flex;
-    align-items: center;
-    user-select: none;
-    transition: opacity 0.3s ease, color 0.3s ease;
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-      fill: currentColor;
-    }
-
-    // Modifier: sun (default bright with warm color)
-    &--sun {
-      opacity: 1;
-      color: var(--accent); // Warm orange/yellow for sun
-    }
-
-    // Modifier: moon (default dim with cool color)
-    &--moon {
-      opacity: 0.4;
-      color: var(--info); // Cool blue for moon
-    }
-  }
-
-  &__theme-label {
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: var(--font-size-xs); // 12px
-    font-weight: var(--font-weight-normal);
-    color: var(--text-secondary);
-    user-select: none;
-    transition: opacity var(--transition-base) ease;
-
-    // Default: Light is visible, Dark is dimmed
-    .navbar__theme-option:first-child & {
-      opacity: 1;
-    }
-
-    .navbar__theme-option:last-child & {
-      opacity: 0.5;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // iOS-style Toggle Switch
-  // ---------------------------------------------------------------------------
-  &__switch {
-    position: relative;
-    display: inline-block;
-    width: 52px;
-    height: 28px;
-    cursor: pointer;
-
-    // Hide native checkbox but keep it accessible
-    input[type="checkbox"] {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-  }
-
-  &__slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--surface-hover);
-    border: 2px solid var(--border-default);
-    border-radius: 34px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    // The sliding button (circle)
-    &::before {
-      content: '';
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      bottom: 2px;
-      background: var(--text-secondary);
-      border-radius: 50%;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 2px 4px oklch(from var(--color-black) l c h / 0.2);
-    }
-  }
-
-  // When checked: just slide the button, colors stay theme-aware!
-  &__switch input:checked+&__slider {
-    &::before {
-      transform: translateX(24px);
-    }
-  }
-
-  // Focus state for accessibility
-  &__switch input:focus-visible+&__slider {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-  }
-
-  // Hover effect
-  &__switch:hover &__slider {
-    border-color: var(--border-strong);
-
-    &::before {
-      box-shadow: 0 2px 8px oklch(from var(--color-black) l c h / 0.3);
-    }
-  }
-
-  &__mobile-actions {
-    display: none; // Hidden on desktop
-    justify-self: end;
-    align-items: center;
-    gap: var(--spacing-4);
-
-    @media (max-width: $breakpoint-mobile) {
-      display: flex;
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Mobile Theme Toggle (icon only, no labels)
-  // ---------------------------------------------------------------------------
-  &__theme-toggle-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px; // Touch target size (Apple HIG)
-    height: 44px;
-    padding: var(--spacing-2);
-    background: transparent;
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-full);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    &:hover {
-      background: var(--surface-hover);
-      border-color: var(--border-strong);
-      color: var(--primary);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--primary);
-      outline-offset: 2px;
+    // Mobile version: shown in drawer only
+    &--mobile {
+      margin-top: var(--spacing-12);
+      justify-self: center;
     }
   }
 
@@ -453,18 +259,23 @@
   // Hamburger Button (animated)
   // ---------------------------------------------------------------------------
   &__hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 44px; // Touch target
-    height: 44px;
-    padding: var(--spacing-2);
-    background: transparent;
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-default);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    z-index: calc($z-index-navbar + 3);
+    display: none; // Hidden on desktop
+
+    @media (max-width: $breakpoint-mobile) {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      justify-self: end;
+      width: 44px;
+      height: 44px;
+      padding: var(--spacing-2);
+      background: transparent;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-default);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      z-index: calc($z-index-navbar + 3);
+    }
 
     &:hover {
       background: var(--surface-hover);
@@ -504,6 +315,9 @@
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Mobile Drawer
+  // ---------------------------------------------------------------------------
   &__mobile-overlay {
     position: fixed;
     top: 0;
@@ -526,8 +340,8 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 280px; // Drawer width
-    max-width: 85vw; // Responsive on small phones
+    width: 280px;
+    max-width: 85vw;
     height: 100dvh;
     background: var(--surface);
     border-left: 1px solid var(--border-default);
@@ -547,22 +361,4 @@
     margin-top: 70px;
     padding: var(--spacing-8) var(--spacing-6);
   }
-
-  // ---------------------------------------------------------------------------
-  // Responsive: Mobile
-  // ---------------------------------------------------------------------------
-  @media (max-width: $breakpoint-mobile) {
-    padding: 1rem;
-    gap: 1rem;
-
-
-
-    &__logo {
-      .terminal-logo {
-        width: 120px;
-      }
-    }
-  }
-
-
 }

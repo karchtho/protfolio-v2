@@ -194,6 +194,8 @@ Les échanges dans Claude Code peuvent rester en français.
 - Services injectés via `inject()` plutôt que constructor DI
 - **PAS de `@HostListener` ou `@HostBinding`** → utiliser `host` property dans le decorator
 - Tests avec **Vitest** (intégré par défaut dans CLI v21)
+- {`host : {classs: exempleclasse}` evrywhere ? need to check good pratice}
+- check @use at @ forward for scss imports
 
 ### SCSS & Design System
 - **TOUJOURS utiliser les tokens de couleur** (`--primary`, `--text-secondary`, etc.) — jamais de couleurs hardcodées, jamais de `rgba()` hardcodé

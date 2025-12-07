@@ -99,12 +99,12 @@ h6 {
 
 h1 {
   font-size: 2.5rem;
-  margin-bottom: var(--spacing-6);
+  margin-bottom: var(--spacing-12);
 }
 
 h2 {
   font-size: 2rem;
-  margin-bottom: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
 }
 
 h3 {
@@ -274,11 +274,20 @@ pre {
 // ---------------------------------------------------------------------------
 
 // Container
-.container {
+.container-primary {
   width: 100%;
-  max-width: 1200px;
+  // max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  background-color: var(--bg-primary);
+}
+
+.container-secondary {
+    width: 100%;
+    // max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    background-color: var(--bg-secondary);
 }
 
 // Card component

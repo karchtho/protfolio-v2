@@ -1,23 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { ThemeService } from '../../services/theme.service';
 import { Logo } from "../logo/logo";
+import { ThemeSwitcher } from '../theme-switcher/theme-switcher';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, Logo],
+  imports: [RouterLink, RouterLinkActive, Logo, ThemeSwitcher],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar {
-  // Inject theme service
-  private themeService = inject(ThemeService);
-
-  // Computed signal
+  // Mobile menu state
   isMobileMenuOpen = signal(false);
-  isDark = computed(() => this.themeService.isDarkMode());
 
   // Navigation items
   navItems = [
@@ -25,11 +21,6 @@ export class Navbar {
     {label: 'Projects', path: '/projects'},
     {label: 'About', path: '/about'}
   ]
-
-  // Toggle theme when slider is clicked
-  onThemeToggle(): void {
-    this.themeService.toggleTheme();
-  }
 
   toggleMobileMenu(): void  {
     this.isMobileMenuOpen.update(value => !value);
