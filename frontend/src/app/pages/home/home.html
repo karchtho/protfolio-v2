@@ -1,33 +1,35 @@
 <!-- Hero section -->
-<section class="hero">
-  <div class="hero__content">
-    <code class="hero__subtitle">Full stack developer</code>
-    <h1 class="hero__title">Building modern Web applications</h1>
-    <p class="hero__description">
-      Passionate developer with expertise in HTML, CSS, and JavaScript. Proficient in PHP and
-      actively expanding my skills in modern frameworks like React, Node.js, Angular, Python, and
-      C#. I love creating efficient, scalable solutions and learning new technologies.
-    </p>
-    <div class="hero__actions">
-      <app-button label="View projects" href="#featured-projects"></app-button>
-      <app-button label="Contact me" [variant]="'ghost'"></app-button>
-    </div>
-  </div>
+ <section id="hero" class="container-full bg-primary">
+   <div class="hero container">
+     <div class="hero__content">
+       <code class="hero__subtitle">Full stack developer</code>
+       <h1 class="hero__title">Building modern Web applications</h1>
+       <p class="hero__description">
+         Passionate developer with expertise in HTML, CSS, and JavaScript. Proficient in PHP and
+         actively expanding my skills in modern frameworks like React, Node.js, Angular, Python, and
+         C#. I love creating efficient, scalable solutions and learning new technologies.
+       </p>
+       <div class="hero__actions">
+         <app-button label="View projects" href="#featured-projects"></app-button>
+         <app-button label="Contact me" [variant]="'ghost'"></app-button>
+       </div>
+     </div>
 
-  <div class="hero__image">
-    <img
-      ngSrc="/images/portrait/thomas-medium.webp"
-      alt="Thomas - Full stack developer"
-      width="600"
-      height="734"
-      priority
-    />
-  </div>
-</section>
+     <div class="hero__image">
+       <img
+         ngSrc="/images/portrait/thomas-medium.webp"
+         alt="Thomas - Full stack developer"
+         width="600"
+         height="734"
+         priority
+       />
+     </div>
+   </div>
+ </section>
 
 <!-- Featured projects section -->
-<section id="featured-projects" class="container-secondary">
-  <div class="featured-projects" >
+<section id="featured-projects" class="container-full bg-secondary">
+  <div class="container" >
     <div class="featured-projects__header">
       <h2>Featured projects</h2>
       <p>Check out some of my best work</p>
@@ -72,68 +74,70 @@
 </section>
 
 <!-- Skills Section -->
-<section class="skills">
-  <div class="skills__header">
-    <h2>Skills & Technologies</h2>
-    <p class="skills__subtitle">My technical toolkit, organized by proficiency level</p>
-  </div>
+ <section id="skills" class="container-full bg-primary">
+   <div class="skills container">
+     <div class="skills__header">
+       <h2>Skills & Technologies</h2>
+       <p class="skills__subtitle">My technical toolkit, organized by proficiency level</p>
+     </div>
 
-  <div class="skills__categories">
-    <!-- Proficient -->
-    <div class="skills__category">
-      <h3 class="skills__category-title">
-        <span class="skills__category-icon">✓</span>
-        Proficient
-      </h3>
-      <p class="skills__category-description">Advanced knowledge & hands-on experience</p>
-      <div class="skills__grid">
-        <app-skill-badge label="HTML5" />
-        <app-skill-badge label="CSS3" />
-        <app-skill-badge label="JavaScript ES6+" />
-        <app-skill-badge label="Responsive Design" />
-        <app-skill-badge label="Flexbox" />
-        <app-skill-badge label="Grid" />
-        <app-skill-badge label="DOM APIs" />
-        <app-skill-badge label="Semantic HTML" />
-        <app-skill-badge label="Web Accessibility" />
-      </div>
-    </div>
+     <div class="skills__categories">
+       <!-- Proficient -->
+       <div class="skills__category">
+         <h3 class="skills__category-title">
+           <span class="skills__category-icon">✓</span>
+           Proficient
+         </h3>
+         <p class="skills__category-description">Advanced knowledge & hands-on experience</p>
+         <div class="skills__grid">
+           <app-skill-badge label="HTML5" />
+           <app-skill-badge label="CSS3" />
+           <app-skill-badge label="JavaScript ES6+" />
+           <app-skill-badge label="Responsive Design" />
+           <app-skill-badge label="Flexbox" />
+           <app-skill-badge label="Grid" />
+           <app-skill-badge label="DOM APIs" />
+           <app-skill-badge label="Semantic HTML" />
+           <app-skill-badge label="Web Accessibility" />
+         </div>
+       </div>
 
-    <!-- Comfortable -->
-    <div class="skills__category">
-      <h3 class="skills__category-title">
-        <span class="skills__category-icon">~</span>
-        Comfortable
-      </h3>
-      <p class="skills__category-description">Good understanding with practical experience</p>
-      <div class="skills__grid">
-        <app-skill-badge label="PHP" />
-        <app-skill-badge label="MySQL" />
-        <app-skill-badge label="REST APIs" />
-        <app-skill-badge label="MVC Architecture" />
-        <app-skill-badge label="Server-side Logic" />
-      </div>
-    </div>
+       <!-- Comfortable -->
+       <div class="skills__category">
+         <h3 class="skills__category-title">
+           <span class="skills__category-icon">~</span>
+           Comfortable
+         </h3>
+         <p class="skills__category-description">Good understanding with practical experience</p>
+         <div class="skills__grid">
+           <app-skill-badge label="PHP" />
+           <app-skill-badge label="MySQL" />
+           <app-skill-badge label="REST APIs" />
+           <app-skill-badge label="MVC Architecture" />
+           <app-skill-badge label="Server-side Logic" />
+         </div>
+       </div>
 
-    <!-- Learning -->
-    <div class="skills__category">
-      <h3 class="skills__category-title">
-        <span class="skills__category-icon">↗</span>
-        Learning
-      </h3>
-      <p class="skills__category-description">Actively studying & building projects</p>
-      <div class="skills__grid">
-        <app-skill-badge label="React" />
-        <app-skill-badge label="Node.js" />
-        <app-skill-badge label="Express" />
-        <app-skill-badge label="Angular" />
-        <app-skill-badge label="TypeScript" />
-        <app-skill-badge label="Python" />
-        <app-skill-badge label="C#" />
-        <app-skill-badge label=".NET" />
-        <app-skill-badge label="Component Architecture" />
-        <app-skill-badge label="State Management" />
-      </div>
-    </div>
-  </div>
-</section>
+       <!-- Learning -->
+       <div class="skills__category">
+         <h3 class="skills__category-title">
+           <span class="skills__category-icon">↗</span>
+           Learning
+         </h3>
+         <p class="skills__category-description">Actively studying & building projects</p>
+         <div class="skills__grid">
+           <app-skill-badge label="React" />
+           <app-skill-badge label="Node.js" />
+           <app-skill-badge label="Express" />
+           <app-skill-badge label="Angular" />
+           <app-skill-badge label="TypeScript" />
+           <app-skill-badge label="Python" />
+           <app-skill-badge label="C#" />
+           <app-skill-badge label=".NET" />
+           <app-skill-badge label="Component Architecture" />
+           <app-skill-badge label="State Management" />
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>

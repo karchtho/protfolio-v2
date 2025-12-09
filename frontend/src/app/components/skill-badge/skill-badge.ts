@@ -4,9 +4,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-skill-badge',
   imports: [],
   template: `
-  <code class="skil-badge">{{label()}}</code>
+  <code >{{label()}}</code>
   `,
-  // styleUrl: './skill-badge.scss',
+  // Style managed through the <code> element in style.scss
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillBadge {

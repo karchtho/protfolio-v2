@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 
 import { Project } from '../../models/project.model';
@@ -11,7 +12,7 @@ import { Button } from '../button/button';
  */
 @Component({
   selector: 'app-project-card',
-  imports: [Button],
+  imports: [Button, NgOptimizedImage],
   templateUrl: './project-card.html',
   styleUrl: './project-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

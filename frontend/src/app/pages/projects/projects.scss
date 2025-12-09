@@ -7,47 +7,47 @@
 
 // Using .container utility class applied in HTML
 // No need to duplicate max-width + margin: 0 auto
+.projects {
 
-.projects__header {
-  text-align: center;
-  margin-bottom: 3rem;
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-12);
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-.projects__subtitle {
-  font-size: 1.125rem;
-  color: var(--text-secondary);
-}
-
-.projects__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-}
-
-.loading,
-.error {
-  text-align: center;
-  padding: 3rem 1rem;
-  font-size: 1.125rem;
-}
-
-.error {
-  color: var(--error);
-}
-
-// Responsive adjustments
-@media (max-width: $breakpoint-mobile) {
-  .projects__header h1 {
-    font-size: 2rem;
+    h1 {
+      margin-bottom: var(--spacing-6);
+    }
   }
 
-  .projects__grid {
+  &__subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+  }
+
+  &__grid {
+    display: grid;
+    gap: var(--spacing-8);
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+
+    @media (min-width: $breakpoint-mobile) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-6);
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__error {
+      text-align: center;
+      padding: var(--spacing-12);
+      color: var(--danger);
+    }
+
+    &__loading {
+      text-align: center;
+      padding: var(--spacing-12);
+      color: var(--text-tertiary);
+    }
+
   }
 }

@@ -68,7 +68,7 @@
     pointer-events: none;
 
     // Animation au scroll (disabled if user prefers reduced motion)
-    @media (prefers-reduced-motion: no-preference) {
+    @media (prefers-reduced-motion: no-preference ) {
       animation: navbar-glow linear forwards;
       animation-timeline: scroll(root);
       animation-range: 0 100px;

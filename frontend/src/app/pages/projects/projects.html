@@ -1,17 +1,17 @@
-<div class="container">
+<div class="pprojects container">
   <header class="projects__header">
     <h1>My Projects</h1>
     <p class="projects__subtitle">A showcase of my work and experiments</p>
   </header>
 
   @if (projectsService.loading()) {
-    <div class="loading">
+    <div class="projects__loading">
       <p>Loading projects...</p>
     </div>
   }
 
   @if (projectsService.error()) {
-    <div class="error">
+    <div class="projects__error card">
       <p>{{ projectsService.error() }}</p>
     </div>
   }

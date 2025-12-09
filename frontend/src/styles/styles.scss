@@ -33,7 +33,12 @@
 @use 'themes';
 
 // ---------------------------------------------------------------------------
-// 4. GLOBAL RESETS & BASE STYLES
+// 5. MIXInS
+// ---------------------------------------------------------------------------
+@use 'mixins' as *;
+
+// ---------------------------------------------------------------------------
+// 7. GLOBAL RESETS & BASE STYLES
 // ---------------------------------------------------------------------------
 
 * {
@@ -85,70 +90,75 @@ body {
 // 4. TYPOGRAPHY
 // ---------------------------------------------------------------------------
 
+/**
+ * Headings
+ * Using design tokens for consistent sizing
+ */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  color: var(--text-primary);
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  line-height: 1.3;
+  @include heading;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--font-size-5xl);
   margin-bottom: var(--spacing-12);
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: var(--font-size-4xl);
   margin-bottom: var(--spacing-8);
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: var(--font-size-3xl);
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: var(--font-size-2xl);
 }
 
 h5 {
-  font-size: 1.25rem;
+  font-size: var(--font-size-xl);
 }
 
 h6 {
-  font-size: 1rem;
+  font-size: var(--font-size-lg);
 }
 
+/**
+ * Body Text
+ */
 p {
+  @include body-text;
   margin-bottom: var(--spacing-4);
-  color: var(--text-secondary);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 // ---------------------------------------------------------------------------
 // 5. LINKS
 // ---------------------------------------------------------------------------
 
+/**
+ * Links
+ */
 a {
-  color: var(--link);
+  color: var(--text-secondary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--transition-base) var(--ease-in-out);
 
   &:hover {
-    color: var(--link-hover);
-  }
-
-  &:visited {
-    color: var(--link-visited);
+    color: var(--primary-hover);
   }
 
   &:focus-visible {
-    outline: none;
-    box-shadow: var(--focus-ring);
-    border-radius: 2px;
+    @include focus-ring;
   }
 }
 
@@ -177,26 +187,35 @@ button {
 // 7. FORM ELEMENTS
 // ---------------------------------------------------------------------------
 
-label {
-  font-family: 'Source Sans 3', sans-serif;
-  font-weight: 500;
-  color: var(--text-primary);
-}
 
+/**
+ * Base Input Styling
+ */
 input,
 textarea,
 select {
+  // Typography
   font-family: 'Source Sans 3', sans-serif;
-  font-size: inherit;
-  color: var(--text-primary);
-  background-color: var(--surface);
-  border: 1px solid var(--border-default);
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  transition: all 0.2s ease;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
 
+  // Spacing
+  padding: var(--spacing-2) var(--spacing-3); // 8px 12px
+
+  // Appearance
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+
+  // Transitions
+  transition:
+    border-color var(--transition-base) var(--ease-in-out),
+    box-shadow var(--transition-base) var(--ease-in-out);
+
+  // States
   &:hover {
-    border-color: var(--border-interactive);
+    border-color: var(--border-strong);
   }
 
   &:focus {
@@ -206,22 +225,68 @@ select {
   }
 
   &:disabled {
-    opacity: 0.5;
+    background: var(--surface-disabled);
+    color: var(--text-tertiary);
     cursor: not-allowed;
+    opacity: 0.6;
   }
 
+  // Placeholder
   &::placeholder {
     color: var(--text-tertiary);
   }
+}
+
+/**
+ * Textarea Specific
+ */
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/**
+ * Select Specific
+ */
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='currentColor' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-3) center;
+  padding-right: var(--spacing-10); // Space for arrow
+  resize: none;
+}
+
+/**
+ * Checkbox & Radio
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  width: var(--size-icon-md); // 24px
+  height: var(--size-icon-md);
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+/**
+ * Button (base HTML button, not .btn component)
+ */
+button {
+  @include interactive;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: var(--font-size-base);
 }
 
 // ---------------------------------------------------------------------------
 // 8. CODE BLOCKS
 // ---------------------------------------------------------------------------
 
-code,
-pre {
-  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+code {
+  @include code-text;
   background-color: var(--surface);
   border: 1px solid var(--border-default);
   border-radius: 4px;
@@ -229,44 +294,41 @@ pre {
   max-width: fit-content;
   margin-bottom: var(--spacing-3);
   white-space: nowrap;
+  padding: var(--spacing-1) var(--spacing-2);
 }
 
-code {
-  padding: 0.2rem 0.4rem;
-  font-size: 0.875em;
-}
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
 
-pre {
-  padding: 1rem;
-  overflow-x: auto;
-
-  code {
-    border: none;
-    padding: 0;
-    background: none;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// 9. SCROLLBAR STYLING (for webkit browsers)
-// ---------------------------------------------------------------------------
-
+/**
+ * Custom Scrollbar (Webkit browsers)
+ */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: var(--spacing-3); // 12px
+  height: var(--spacing-3);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
-  border-radius: 6px;
+  border-radius: var(--radius-full);
+  border: var(--spacing-1) solid var(--background); // 4px inset
 
   &:hover {
     background: var(--text-tertiary);
   }
+}
+
+/**
+ * Firefox Scrollbar
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--background);
 }
 
 // ---------------------------------------------------------------------------
@@ -274,37 +336,39 @@ pre {
 // ---------------------------------------------------------------------------
 
 // Container
-.container-primary {
+.container {
+  @include container;
+
+}
+
+.container-lg {
+  @include container(var(--container-lg));
+}
+
+.container-sm {
+  @include container(var(--container-sm));
+}
+
+.container-full {
   width: 100%;
-  // max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  background-color: var(--bg-primary);
-}
+  padding: var(--spacing-10) var(--spacing-4);
 
-.container-secondary {
-    width: 100%;
-    // max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    background-color: var(--bg-secondary);
-}
-
-// Card component
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border-default);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
-
-  &:hover {
-    box-shadow: var(--shadow-md);
+  @media (min-width: $breakpoint-tablet) {
+    padding: var(--spacing-16) var(--spacing-8);
   }
 }
 
-// Text utilities
+/**
+ * Card Utility
+ * Standard card styling
+ */
+.card {
+  @include card; // Uses the mixin!
+}
+
+/**
+ * Text Color Utilities
+ */
 .text-primary {
   color: var(--text-primary);
 }
@@ -317,7 +381,9 @@ pre {
   color: var(--text-tertiary);
 }
 
-// Background utilities
+/**
+ * Background Utilities
+ */
 .bg-primary {
   background-color: var(--bg-primary);
 }
@@ -330,7 +396,9 @@ pre {
   background-color: var(--surface);
 }
 
-// Border utilities
+/**
+ * Border Utilities
+ */
 .border {
   border: 1px solid var(--border-default);
 }
@@ -343,7 +411,13 @@ pre {
   border: 1px solid var(--border-strong);
 }
 
-// Shadow utilities
+/**
+ * Shadow Utilities
+ */
+.shadow-xs {
+  box-shadow: var(--shadow-xs);
+}
+
 .shadow-sm {
   box-shadow: var(--shadow-sm);
 }
@@ -358,4 +432,86 @@ pre {
 
 .shadow-xl {
   box-shadow: var(--shadow-xl);
+}
+
+.shadow-none {
+  box-shadow: none;
+}
+
+/**
+ * Spacing Utilities
+ * Use sparingly - prefer component-specific spacing
+ */
+.mt-0 {
+  margin-top: var(--spacing-0);
+}
+
+.mt-1 {
+  margin-top: var(--spacing-1);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-2);
+}
+
+.mt-4 {
+  margin-top: var(--spacing-4);
+}
+
+.mt-6 {
+  margin-top: var(--spacing-6);
+}
+
+.mt-8 {
+  margin-top: var(--spacing-8);
+}
+
+.mb-0 {
+  margin-bottom: var(--spacing-0);
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-1);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacing-2);
+}
+
+.mb-4 {
+  margin-bottom: var(--spacing-4);
+}
+
+.mb-6 {
+  margin-bottom: var(--spacing-6);
+}
+
+.mb-8 {
+  margin-bottom: var(--spacing-8);
+}
+
+/**
+ * Display Utilities
+ */
+.hidden {
+  display: none;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+/**
+ * Truncation Utilities
+ */
+.truncate {
+  @include truncate;
+}
+
+.line-clamp-2 {
+  @include line-clamp(2);
+}
+
+.line-clamp-3 {
+  @include line-clamp(3);
 }

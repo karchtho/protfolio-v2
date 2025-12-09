@@ -1,66 +1,195 @@
-// button.component.scss
-.btn {
+// // button.component.scss
+// .btn {
+//   display: inline-block;
+//   border: none;
+//   border-radius: 0.25rem;
+//   cursor: pointer;
+//   transition: all 0.2s ease;
+//   font-family: 'Poppins';
+//   text-decoration: none;
+
+//   // Variants
+//   &.primary {
+//     background: var(--primary);
+//     color: var(--text-on-primary);
+
+//     &:hover {
+//       background: var(--primary-hover);
+//       text-decoration: none;
+//     }
+
+//     &:active {
+//       background: var(--primary-active);
+//     }
+//   }
+
+//   &.secondary {
+//     background: transparent;
+//     color: var(--text-secondary);
+//     border: 1px solid var(--border-default);
+
+//   &:hover {
+//       background: var(--surface-hover);
+//       border-color: var(--border-strong);
+//       color: var(--text-primary);
+//       text-decoration: none;
+//     }
+//   }
+
+//   &.ghost {
+//     background: transparent;
+//     border: 1px solid var(--border-default);
+//     color: var(--text-primary);
+
+//     &:hover {
+//       background: var(--surface-hover);
+//       border-color: var(--border-strong);
+//       text-decoration: none;
+//     }
+//   }
+
+//   // Sizes
+//   &.size-sm {
+//     padding: 0.25rem 0.5rem;
+//     font-size: 0.875rem;
+//   }
+
+//   &.size-md {
+//     padding: 0.5rem 1rem;
+//     font-size: 1rem;
+//   }
+
+//   &.size-lg {
+//     padding: 0.75rem 1.5rem;
+//     font-size: 1.125rem;
+//   }
+// }
+
+@use '../../../styles/mixins' as *;
+:host {
   display: inline-block;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Poppins';
+}
+
+.button {
+  // Reset
+  all: unset;
+  box-sizing: border-box;
+
+  // Base styles
+  @include interactive; // Adds cursor, user-select, tap-highlight, focus, disabled
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+
+  // Typography
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: var(--font-weight-medium);
+  text-align: center;
   text-decoration: none;
+  white-space: nowrap;
 
-  // Variants
-  &.primary {
-    background: var(--primary);
+  // Shape
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+
+  // Transitions
+  transition:
+    background-color var(--transition-base) var(--ease-in-out),
+    border-color var(--transition-base) var(--ease-in-out),
+    color var(--transition-base) var(--ease-in-out),
+    transform var(--transition-fast) var(--ease-out);
+
+  // Hover lift effect
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  // Reduced motion
+  @media (prefers-reduced-motion: reduce) {
+    transition:
+      background-color var(--transition-base) var(--ease-in-out),
+      border-color var(--transition-base) var(--ease-in-out),
+      color var(--transition-base) var(--ease-in-out);
+
+    &:hover:not(:disabled) {
+      transform: none;
+    }
+  }
+
+  /* ==========================================================================
+     SIZE MODIFIERS
+     ========================================================================== */
+
+  &--small {
+    padding: var(--spacing-1) var(--spacing-2);
+    font-size: var(--font-size-sm);
+    gap: var(--spacing-1);
+  }
+
+  &--medium {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-base);
+  }
+
+  &--large {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-lg);
+    gap: var(--spacing-3);
+  }
+
+  /* ==========================================================================
+     VARIANT MODIFIERS
+     ========================================================================== */
+
+  // Primary variant
+  &--primary {
+    background-color: var(--primary);
     color: var(--text-on-primary);
+    border-color: var(--primary);
 
-    &:hover {
-      background: var(--primary-hover);
-      text-decoration: none;
+    &:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
     }
 
-    &:active {
-      background: var(--primary-active);
-    }
-  }
-
-  &.secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-default);
-
-  &:hover {
-      background: var(--surface-hover);
-      border-color: var(--border-strong);
-      color: var(--text-primary);
-      text-decoration: none;
+    &:active:not(:disabled) {
+      background-color: var(--primary-active);
+      border-color: var(--primary-active);
     }
   }
 
-  &.ghost {
-    background: transparent;
-    border: 1px solid var(--border-default);
+  // Secondary variant
+  &--secondary {
+    background-color: var(--secondary);
+    color: var(--text-on-secondary);
+    border-color: var(--secondary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--secondary-hover);
+      border-color: var(--secondary-hover);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--secondary-active);
+      border-color: var(--secondary-active);
+    }
+  }
+
+  // Ghost variant
+  &--ghost {
+    background-color: transparent;
     color: var(--text-primary);
+    border-color: var(--border-default);
 
-    &:hover {
-      background: var(--surface-hover);
-      border-color: var(--border-strong);
-      text-decoration: none;
+    &:hover:not(:disabled) {
+      background-color: var(--primary-alpha-10);
+      color: var(--primary);
+      border-color: var(--primary);
     }
-  }
 
-  // Sizes
-  &.size-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-  }
-
-  &.size-md {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-  }
-
-  &.size-lg {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
+    &:active:not(:disabled) {
+      background-color: var(--primary-alpha-20);
+    }
   }
 }

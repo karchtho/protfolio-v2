@@ -10,15 +10,15 @@
   // TYPOGRAPHY - Font sizes
   // ---------------------------------------------------------------------------
   // Base: 16px (browser default)
-  --font-size-xs: 0.75rem;    // 12px - Small labels, captions
-  --font-size-sm: 0.875rem;   // 14px - Secondary text, small buttons
-  --font-size-base: 1rem;     // 16px - Body text, paragraphs
-  --font-size-lg: 1.125rem;   // 18px - Subheadings, emphasis
-  --font-size-xl: 1.25rem;    // 20px - Card titles, section headers
-  --font-size-2xl: 1.5rem;    // 24px - Page subtitles (h4)
-  --font-size-3xl: 1.75rem;   // 28px - Section titles (h3)
-  --font-size-4xl: 2rem;      // 32px - Page titles (h2)
-  --font-size-5xl: 2.5rem;    // 40px - Hero titles (h1)
+  --font-size-xs: 0.75rem; // 12px - Small labels, captions
+  --font-size-sm: 0.875rem; // 14px - Secondary text, small buttons
+  --font-size-base: 1rem; // 16px - Body text, paragraphs
+  --font-size-lg: 1.125rem; // 18px - Subheadings, emphasis
+  --font-size-xl: 1.25rem; // 20px - Card titles, section headers
+  --font-size-2xl: 1.5rem; // 24px - Page subtitles (h4)
+  --font-size-3xl: 1.75rem; // 28px - Section titles (h3)
+  --font-size-4xl: 2rem; // 32px - Page titles (h2)
+  --font-size-5xl: 2.5rem; // 40px - Hero titles (h1)
 
   // Font weights
   --font-weight-normal: 400;
@@ -27,46 +27,46 @@
   --font-weight-bold: 700;
 
   // Line heights
-  --line-height-tight: 1.25;   // 125% - Headings
-  --line-height-normal: 1.5;   // 150% - Body text
+  --line-height-tight: 1.25; // 125% - Headings
+  --line-height-normal: 1.5; // 150% - Body text
   --line-height-relaxed: 1.75; // 175% - Long-form content
 
   // ---------------------------------------------------------------------------
   // SPACING - Padding & Margin
   // ---------------------------------------------------------------------------
   // Consistent spacing scale based on 0.25rem (4px) increments
-  --spacing-0: 0;              // 0px
-  --spacing-1: 0.25rem;        // 4px
-  --spacing-2: 0.5rem;         // 8px
-  --spacing-3: 0.75rem;        // 12px
-  --spacing-4: 1rem;           // 16px
-  --spacing-5: 1.25rem;        // 20px
-  --spacing-6: 1.5rem;         // 24px
-  --spacing-8: 2rem;           // 32px
-  --spacing-10: 2.5rem;        // 40px
-  --spacing-12: 3rem;          // 48px
-  --spacing-16: 4rem;          // 64px
-  --spacing-20: 5rem;          // 80px
-  --spacing-24: 6rem;          // 96px
+  --spacing-0: 0; // 0px
+  --spacing-1: 0.25rem; // 4px
+  --spacing-2: 0.5rem; // 8px
+  --spacing-3: 0.75rem; // 12px
+  --spacing-4: 1rem; // 16px
+  --spacing-5: 1.25rem; // 20px
+  --spacing-6: 1.5rem; // 24px
+  --spacing-8: 2rem; // 32px
+  --spacing-10: 2.5rem; // 40px
+  --spacing-12: 3rem; // 48px
+  --spacing-16: 4rem; // 64px
+  --spacing-20: 5rem; // 80px
+  --spacing-24: 6rem; // 96px
 
   // ---------------------------------------------------------------------------
   // BORDER RADIUS - Rounded corners
   // ---------------------------------------------------------------------------
   --radius-none: 0;
-  --radius-sm: 0.25rem;        // 4px - Subtle rounding
-  --radius-default: 0.5rem;    // 8px - Cards, buttons
-  --radius-md: 0.75rem;        // 12px - Modal, large cards
-  --radius-lg: 1rem;           // 16px - Hero sections
-  --radius-xl: 1.5rem;         // 24px - Large containers
-  --radius-full: 9999px;       // Pill shape, circular buttons
+  --radius-sm: 0.25rem; // 4px - Subtle rounding
+  --radius-default: 0.5rem; // 8px - Cards, buttons
+  --radius-md: 0.75rem; // 12px - Modal, large cards
+  --radius-lg: 1rem; // 16px - Hero sections
+  --radius-xl: 1.5rem; // 24px - Large containers
+  --radius-full: 9999px; // Pill shape, circular buttons
 
   // ---------------------------------------------------------------------------
   // TRANSITIONS - Animation durations
   // ---------------------------------------------------------------------------
-  --transition-fast: 150ms;    // Quick interactions (hover, focus)
-  --transition-base: 250ms;    // Default transitions
-  --transition-slow: 400ms;    // Smooth, noticeable animations
-  --transition-slower: 600ms;  // Drawer, modal open/close
+  --transition-fast: 150ms; // Quick interactions (hover, focus)
+  --transition-base: 250ms; // Default transitions
+  --transition-slow: 400ms; // Smooth, noticeable animations
+  --transition-slower: 600ms; // Drawer, modal open/close
 
   // Easing functions
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
@@ -84,6 +84,40 @@
   --shadow-lg: 0 8px 16px oklch(from var(--color-black) l c h / 0.2);
   --shadow-xl: 0 16px 32px oklch(from var(--color-black) l c h / 0.25);
 
+  /* ==========================================================================
+     SIZE TOKENS
+     ========================================================================== */
+
+  /**
+   * Icon Sizes
+   * Standard sizes for SVG icons throughout the app
+   */
+  --size-icon-xs: 16px;
+  --size-icon-sm: 18px;
+  --size-icon-md: 24px;
+  --size-icon-lg: 32px;
+  --size-icon-xl: 48px;
+
+  /**
+   * Touch Targets
+   * Minimum sizes for interactive elements (WCAG 2.5.5)
+   */
+  --size-touch-min: 44px; // iOS/Android minimum
+  --size-touch-comfortable: 48px; // Comfortable for most users
+
+  /**
+ * Logo Sizes
+ * Responsive logo dimensions
+ */
+  --size-logo-mobile: 120px;
+  --size-logo-desktop: 200px;
+
+  --size-drawer-mobile: 280px;
+  --size-card-image-height: 200px; // Fallback if aspect-ratio not supported
+  --size-skeleton-min-height: 400px;
+  --size-navbar-height: auto;
+
+
   // ---------------------------------------------------------------------------
   // Z-INDEX - Layering system
   // ---------------------------------------------------------------------------
@@ -97,9 +131,9 @@
   // ---------------------------------------------------------------------------
   // CONTAINER - Max widths
   // ---------------------------------------------------------------------------
-  --container-sm: 640px;       // Small content (articles, forms)
-  --container-md: 768px;       // Medium content
-  --container-lg: 1024px;      // Large content
-  --container-xl: 1200px;      // Default container (used by .container utility)
-  --container-2xl: 1400px;     // Wide layouts
+  --container-sm: 640px; // Small content (articles, forms)
+  --container-md: 768px; // Medium content
+  --container-lg: 1024px; // Large content
+  --container-xl: 1200px; // Default container (used by .container utility)
+  --container-2xl: 1400px; // Wide layouts
 }
