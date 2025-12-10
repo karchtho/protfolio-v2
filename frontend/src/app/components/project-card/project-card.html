@@ -1,7 +1,8 @@
 <article class="project-card">
   @if (project().thumbnail) {
-  <div class="project-card__image">
+  <div class="project-card__image-wrapper">
     <img
+      class="project-card__image"
       [ngSrc]="getImageUrl(project().thumbnail!)"
       [alt]="project().name"
       width="400"
@@ -13,25 +14,27 @@
   }
 
   <div class="project-card__content">
-    <h3 class="project-card__name">{{ project().name }}</h3>
+    <h3 class="project-card__title">{{ project().name }}</h3>
     <p class="project-card__description">{{ project().description }}</p>
 
     <div class="project-card__technologies">
       @for (tag of project().tags; track tag) {
-      <span class="tech-badge">{{ tag }}</span>
+      <span class="project-card__tech-badge">{{ tag }}</span>
       }
     </div>
     <div class="project-card__links">
-      @if (project().url) {
-      <app-button label="Live-demo" [href]="project().url" [external]="true" variant="primary" />
-      } @if (project().github_url) {
+      <app-button
+        label="Live-demo"
+        [href]="project().url || ''"
+        [external]="true"
+        variant="primary"
+      />
       <app-button
         label="GitHub"
-        [href]="project().github_url"
+        [href]="project().github_url || ''"
         [external]="true"
         variant="secondary"
       />
-      }
     </div>
   </div>
 </article>
