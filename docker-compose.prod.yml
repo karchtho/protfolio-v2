@@ -100,12 +100,14 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/migrations:/docker-entrypoint-initdb.d:ro
+      - ./docker/healthcheck.sh:/usr/local/bin/healthcheck.sh:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
+      test: ["CMD", "bash", "/usr/local/bin/healthcheck.sh"]
+      interval: 2s
       timeout: 5s
-      retries: 5
+      retries: 60
+      start_period: 60s
     deploy:
       resources:
         limits:
@@ -115,8 +117,6 @@ services:
           cpus: '0.5'
           memory: 1G
 
-# TODO: Before production deployment, migrate to Docker Swarm secrets or external secret manager
-# Current file-based secrets are for initial VPS deployment only
 secrets:
   db_user:
     file: ./secrets/db_user.txt

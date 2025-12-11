@@ -43,14 +43,17 @@ services:
       MYSQL_DATABASE: portfolio_db
       MYSQL_USER: portfolio_user
       MYSQL_PASSWORD: SecurePassword123!
+      TZ: 'UTC'
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/migrations:/docker-entrypoint-initdb.d
+      - ./docker/healthcheck.sh:/usr/local/bin/healthcheck.sh
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      test: ["CMD", "bash", "/usr/local/bin/healthcheck.sh"]
+      interval: 2s
+      timeout: 10s
+      retries: 60
+      start_period: 40s
 
 volumes:
   mysql_data:
