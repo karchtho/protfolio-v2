@@ -50,10 +50,10 @@ services:
       - ./docker/healthcheck.sh:/usr/local/bin/healthcheck.sh
     healthcheck:
       test: ["CMD", "bash", "/usr/local/bin/healthcheck.sh"]
-      interval: 2s
-      timeout: 10s
-      retries: 60
-      start_period: 40s
+      interval: 3s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
 
 volumes:
   mysql_data:

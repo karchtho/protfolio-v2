@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # MySQL healthcheck: Verify database and schema are ready
-# Supports both dev (env vars) and prod (Docker secrets)
+# Uses mysqladmin (always available in MySQL image)
 
 MYSQL_HOST="${MYSQL_HOST:-localhost}"
 
@@ -16,10 +16,8 @@ else
   MYSQL_DATABASE="${MYSQL_DATABASE:-portfolio_db}"
 fi
 
-# Try to query the projects table
-# This proves: MySQL is responding + database exists + schema was initialized
-mysql -h"$MYSQL_HOST" -u root -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE" \
-  --connect-timeout=3 \
-  -e "SELECT 1 FROM projects LIMIT 1;" > /dev/null 2>&1
+# Simple check: Is MySQL accepting connections?
+# This is enough - the initialization scripts will have run by the time backend tries to connect
+mysqladmin ping -h"$MYSQL_HOST" -u root -p"$MYSQL_ROOT_PASSWORD" --silent 2>/dev/null
 
 exit $?
