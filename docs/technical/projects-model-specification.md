@@ -1670,6 +1670,154 @@ Response: 404 Not Found
 
 ---
 
+## 🚧 Implementation Status
+
+**Last Updated:** December 11, 2025 (Evening Session)
+**Current Phase:** Phase 4B Complete + Tests Written ✅
+
+### ✅ Completed
+
+#### Phase 4A: Database Migration (NOT YET RUN - PENDING SERVER ACCESS)
+- [x] Migration script created: `database/migrations/003_update_projects_schema.sql`
+- [x] Rollback script created: `database/migrations/003_rollback_projects_schema.sql`
+- [x] Migration procedure documented: `database/migrations/003_migration_procedure.md`
+- [ ] **PENDING:** Run migration on dev environment (user has no server access yet)
+
+#### Phase 4B: Backend Model Updates ✅ COMPLETE
+- [x] Updated `backend/src/models/project.model.ts`
+  - New interfaces: `Project`, `CreateProjectInput`, `UpdateProjectInput`, `ProjectRow`
+  - New enum: `ProjectStatus` (5 states)
+  - Removed legacy fields: `description`, `image_url`
+  - Added new fields: `short_description`, `long_description`, `case_study_url`, `display_order`
+
+- [x] Installed Zod validation library
+  - `npm install zod` in backend
+
+- [x] Created `backend/src/validation/project.validation.ts`
+  - `createProjectSchema` with all validation rules
+  - `updateProjectSchema` (partial)
+  - Modern Zod API (no deprecated methods)
+
+- [x] Created `backend/src/middleware/validation.middleware.ts`
+  - Generic `validateRequest<T>()` factory function
+  - Zod error formatting
+  - Proper TypeScript types
+
+- [x] Updated `backend/src/routes/projects.routes.ts`
+  - Added validation middleware to POST and PATCH routes
+  - Changed PUT to PATCH (REST best practice)
+  - Imported schemas and middleware
+
+- [x] Updated `backend/src/repositories/projects.repository.ts`
+  - Updated `findAll()` with new sorting: `display_order ASC, created_at DESC`
+  - Updated `findFeatured()` to filter by `status IN ('completed', 'actively_maintained')`
+  - Updated `create()` with all new fields
+  - Updated `update()` with all new fields
+  - Added `mapRowToProject()` helper (JSON parsing, type conversions)
+
+- [x] Controller remains unchanged (validation handled by middleware)
+
+#### Phase 4B Testing ✅ COMPLETE
+- [x] Vitest configured (`vitest.config.ts`)
+- [x] Test directory structure created (`src/__tests__/`)
+- [x] Validation tests written (`project.validation.test.ts` - 22 tests)
+  - Valid input tests (required fields, optional fields, defaults, trimming)
+  - Invalid input tests (missing fields, length constraints, duplicate tags, URL formats)
+  - Update schema tests (partial updates, empty updates)
+- [x] **Bug discovered and fixed:** Update schema was applying defaults (would reset fields on empty PATCH)
+- [x] All tests passing ✅
+
+### 🔄 Current Status
+
+**Backend is code-complete and tested for Phase 4B:**
+1. ❌ Migration not yet run (user needs server access) - **NEXT STEP**
+2. ✅ Validation tests written and passing (22 tests)
+3. ⚠️ Repository tests not yet written (planned next session)
+4. ⚠️ Integration tests not yet written (planned next session)
+5. ❌ Not tested with actual API calls (requires migration first)
+
+### 🎯 Next Steps (In Order)
+
+#### Immediate: Run Migration & Continue Testing
+1. **Run database migration** (when server access available)
+   - Follow procedure in `database/migrations/003_migration_procedure.md`
+   - Verify schema changes
+   - Test with actual data
+
+2. **Write tests for repository** (`projects.repository.test.ts`) — NEXT SESSION
+   - Mock database with test data
+   - Test CRUD operations
+   - Test `mapRowToProject()` transformations
+   - Test sorting logic
+
+3. **Write tests for validation middleware** (`validation.middleware.test.ts`)
+   - Test successful validation calls `next()`
+   - Test failed validation returns 400 with formatted errors
+
+4. **Integration tests** (`projects.integration.test.ts`)
+   - Test full API flow: request → validation → controller → repository
+   - Test POST /api/projects with valid/invalid data
+   - Test PATCH /api/projects/:id
+
+#### After Testing: Phase 4C - Upload System
+- [ ] Install Multer: `npm install multer @types/multer file-type`
+- [ ] Create `backend/src/middleware/upload.middleware.ts`
+- [ ] Create `backend/src/routes/upload.routes.ts`
+- [ ] Configure Express static serving: `app.use('/uploads', express.static(...))`
+- [ ] Test upload flow: POST /api/upload/projects
+- [ ] Test file deletion: DELETE /api/upload/projects/:filename
+
+#### Then: Phase 4D - Frontend Updates
+- [ ] Update `frontend/src/app/models/project.model.ts`
+- [ ] Update `ProjectsService` to handle new fields
+- [ ] Update `ProjectCard` to use `short_description`
+- [ ] Create placeholder Project Detail page with `long_description`
+
+### 📝 Important Notes
+
+**Validation Strategy:**
+- Backend uses Zod schemas in middleware (validates before controller)
+- Frontend will use Angular Reactive Forms validators
+- Same validation rules on both sides (security + UX)
+
+**JSON Fields in MySQL:**
+- `tags` (JSON array of strings) - REQUIRED
+- `images` (JSON array of paths) - OPTIONAL
+- Repository layer handles JSON.parse/stringify automatically
+
+**Status ENUM Logic:**
+- Featured projects: only `completed` or `actively_maintained`
+- All projects page: show all except `archived` (filter toggle planned)
+- In development: shows WIP work
+
+**Sorting Logic:**
+- Primary: `display_order ASC` (manual pinning, 0 = no priority)
+- Secondary: `created_at DESC` (newest first for unpinned)
+
+### 🧪 Test-Driven Development Approach
+
+User prefers TDD methodology:
+- Write tests BEFORE or ALONGSIDE feature implementation
+- Tests document expected behavior
+- Catch regressions early
+- Build confidence in refactoring
+
+**Testing Stack (Backend):**
+- Jest or Vitest (TBD)
+- Supertest for API integration tests
+- Mock database for unit tests
+
+**Session Summary (December 11, 2025 Evening):**
+- ✅ Backend architecture complete (models, validation, middleware, routes, repository)
+- ✅ Vitest testing framework configured
+- ✅ 22 validation tests written and passing
+- ✅ Critical bug discovered and fixed (update schema defaults issue)
+- ✅ TypeScript configuration fixed (tsconfig.json include/exclude)
+- 📝 Total implementation: ~500 lines of production code + ~300 lines of test code
+- 🎯 Next: Run migration, write repository tests, then Phase 4C (upload system)
+
+---
+
 **End of Document**
 
 *This specification serves as the single source of truth for the Projects model architecture. All implementation should reference this document.*
