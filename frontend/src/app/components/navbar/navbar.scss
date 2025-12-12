@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr; // Logo (flex) | Links (auto) | Theme (flex)
   align-items: center;
-  gap: 2rem;
+  gap: var(--spacing-8);
   padding: var(--spacing-6) var(--spacing-8);
   background: var(--surface);
   border-bottom: 1px solid var(--border-default);
@@ -20,15 +20,15 @@
 
   @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr auto; // Logo | Hamburger
-    padding: 1rem;
-    gap: 1rem;
+    padding: var(--spacing-4);
+    gap: var(--spacing-4);
   }
 
   // Animation au scroll (disabled if user prefers reduced motion)
   @media (prefers-reduced-motion: no-preference) {
     animation: navbar-scroll linear forwards;
     animation-timeline: scroll(root);
-    animation-range: 0 100px;
+    animation-range: 0 200px;
   }
 
   // Bordure supérieure brillante (horizontale)
@@ -128,7 +128,7 @@
 
   &__logo {
     .terminal-logo {
-      width: 200px;
+      width: var(--size-logo-desktop);
       height: auto;
       transition: all var(--transition-base);
 
@@ -139,7 +139,7 @@
 
     @media (max-width: $breakpoint-mobile) {
       .terminal-logo {
-        width: 120px;
+        width: var(--size-logo-mobile);
       }
     }
   }
@@ -266,8 +266,8 @@
       flex-direction: column;
       justify-content: space-around;
       justify-self: end;
-      width: 44px;
-      height: 44px;
+      width: var(--size-touch-min);
+      height: var(--size-touch-min);
       padding: var(--spacing-2);
       background: transparent;
       border: 1px solid var(--border-default);
@@ -340,7 +340,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 280px;
+    width: var(--size-drawer-mobile);
     max-width: 85vw;
     height: 100dvh;
     background: var(--surface);
