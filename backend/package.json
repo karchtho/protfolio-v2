@@ -8,7 +8,7 @@
     "test:ui": "vitest-ui",
     "dev": "nodemon --exec ts-node src/main.ts",
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "node dist/src/main.js",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
     "deps:check": "ncu",

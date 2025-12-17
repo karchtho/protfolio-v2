@@ -51,7 +51,7 @@ USER nodejs
 EXPOSE 3000
 
 # Run node directly (faster than npm run start)
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
 
 # Metadata for image identification
 LABEL maintainer="Thomas kitadevturtle@gmail.com"
