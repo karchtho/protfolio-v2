@@ -16,3 +16,5 @@ coverage
 *.test.ts
 tests/
 __tests__
+vitest.config.ts
+vitest.setup.ts
