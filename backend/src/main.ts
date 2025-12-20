@@ -16,7 +16,7 @@ if (result.error) {
 import express from 'express';
 
 // eslint-disable-next-line import/first -- Must load dotenv before other imports
-import { testConnection } from './config/database';
+import { testConnection } from './config/database.config';
 // eslint-disable-next-line import/first -- Must load dotenv before other imports
 import projectRouter from './routes/projects.routes';
   // eslint-disable-next-line import/first -- Must load dotenv before other imports

@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise';
 
-import { getSecret } from './secrets';
+import { getSecret } from './secrets.config';
 
 /**
  * Database configuration from environment variables or Docker secrets

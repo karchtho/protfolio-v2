@@ -57,6 +57,7 @@ services:
       - db_user
       - db_password
       - db_name
+      - jwt_secret
     environment:
       - NODE_ENV=production
       - DB_HOST=mysql
@@ -126,6 +127,8 @@ secrets:
     file: ./secrets/db_name.txt
   mysql_root_password:
     file: ./secrets/mysql_root_password.txt
+  jwt_secret:
+    file: ./secrets/jwt_secret.txt
 
 volumes:
   mysql_data:

@@ -280,35 +280,46 @@ Les échanges dans Claude Code peuvent rester en français.
 
 **État actuel (Décembre 17, 2025) :**
 
-**Phase 4C — Backend Upload System ✅ COMPLET**
-- ✅ Multer configuré avec sécurité multi-couches (extension + MIME + magic bytes)
-- ✅ Routes upload testées : POST /api/uploads/projects, DELETE /api/uploads/projects/:filename
-- ✅ Static file serving fonctionnel : /uploads/projects/*
-- ✅ Protection path traversal validée (Express + code)
-- ✅ Tests manuels complets avec curl
+**Phase 4 — CRUD Projects & Upload System ✅ COMPLET**
+- ✅ Backend upload system (Multer + sécurité multi-couches)
+- ✅ Routes upload : POST/DELETE /api/uploads/projects
+- ✅ Static file serving : /uploads/projects/*
+- ✅ Models TypeScript synchronisés (short/long descriptions, status enum)
+- ✅ Featured projects fonctionnels
 
-**Phase 4D — Frontend Model Sync ✅ COMPLET**
-- ✅ Models TypeScript synchronisés avec backend (short/long descriptions, 5-state status enum)
-- ✅ **Bug critique résolu** : Repository JSON parsing (mysql2 retourne du JSON déjà parsé)
-- ✅ ProjectCard utilise short_description
-- ✅ Featured projects s'affichent correctement
-- ✅ Enum ProjectStatus avec labels et variants pour badges
+**Déploiement Production ✅ OPÉRATIONNEL**
+- ✅ **Site déployé sur https://karcherthomas.com**
+- ✅ Docker Compose prod configuré (frontend + backend + MySQL)
+- ✅ GitHub Actions CI/CD fonctionnel
+- ✅ Docker secrets configurés
+- ✅ Healthcheck endpoints opérationnels
+- ✅ **Bugs de déploiement résolus** :
+  - TypeScript `rootDir: "./"` (pas `"."`)
+  - Docker build paths (`dist/src/main.js`)
+  - Static uploads serving (`../../uploads`)
+- ✅ Volume uploads persistant
+- ✅ Images affichées correctement en prod
 
 **Infrastructure & Design :**
 - ✅ Layout wrapper (navbar + router-outlet + footer)
-- ✅ Routing restructuré avec lazy loading (parent/children)
-- ✅ **Navbar complète** : logo, nav links (active state), theme slider iOS-style
-- ✅ **Footer complet** : copyright + social links (GitHub, LinkedIn, Email)
-- ✅ **Design tokens system** : typography, spacing, transitions, radius, shadows
-- ✅ **Page Home** : hero section + featured projects + Skills section
-- ✅ Health check endpoint moved to /health (best practice)
+- ✅ Routing restructuré avec lazy loading
+- ✅ Navbar complète (logo, nav links, theme slider iOS-style)
+- ✅ Footer complet (copyright + social links)
+- ✅ Design tokens system complet
+- ✅ Page Home (hero + featured projects + skills)
+
+**Phase 5 : Admin Panel 🚧 EN COURS**
+- ✅ Migration SQL `users` table créée
+- ✅ Password admin hashé avec bcrypt
+- ✅ Modèle User TypeScript créé (`User`, `UserSafe`, `LoginCredentials`, `AuthResponse`)
+- ⏳ **À FAIRE** : Repository + Login endpoint + JWT tokens + AuthGuard
 
 **Prochaines étapes (PRIORITÉ) :**
-1. **Phase 5 : Admin Panel** — JWT auth + CRUD interface + upload integration (PRIORITÉ UTILISATEUR)
-2. **Phase 4 : Page Project Detail** — long_description + carousel images
-3. **Optimisations** : Résoudre warnings NgOptimizedImage (aspect ratios)
+1. **Phase 5 : Admin Panel** — Continuer JWT auth + CRUD interface (EN COURS)
+2. **Page Project Detail** — long_description + carousel images
+3. **Optimisations** : Résoudre warnings NgOptimizedImage
 4. **Contact form** — formulaire + backend endpoint
-5. **Mobile hamburger menu** — responsive navbar (optionnel pour v1)
+5. **Mobile hamburger menu** — responsive navbar (optionnel v1)
 
 **Documentation :**
 - Navbar : `docs/technical/style-system/navbar-implementation.md`
@@ -517,5 +528,12 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+
+### Gratuitous Defensive Checks
+Remove defensive code that doesn't match the codebase style:
+- Null checks on values already validated upstream
+- Type checks on typed parameters
+- Try/catch blocks in trusted codepaths
 
 *Dernière mise à jour : 17 Décembre 2025 — Phase 4C-4D terminées (Backend upload system ✅, Frontend model sync ✅, Repository JSON parsing bug fixed ✅) — Prochaine étape : Phase 5 Admin Panel*

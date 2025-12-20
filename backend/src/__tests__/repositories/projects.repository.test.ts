@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { pool } from '../../config/database';
+import { pool } from '../../config/database.config';
 import { CreateProjectInput, ProjectStatus, UpdateProjectInput } from '../../models/project.model';
 import { ProjectsRepository } from '../../repositories/projects.repository';
 
@@ -28,7 +28,7 @@ interface MockProjectRow {
 
 // Mock the database pool
 
-vi.mock('../../config/database', () => ({
+vi.mock('../../config/database.config', () => ({
   pool: {
     query: vi.fn(),
     execute: vi.fn(),

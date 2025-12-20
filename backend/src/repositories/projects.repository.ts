@@ -1,6 +1,6 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
 
-import { pool } from '../config/database';
+import { pool } from '../config/database.config';
 import { CreateProjectInput, Project, UpdateProjectInput } from '../models/project.model';
 
 export class ProjectsRepository {
