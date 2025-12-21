@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response} from 'express';
 import path from 'path';
 
+import { authGuard } from "../middleware/auth.middleware";
 import { deleteFile, uploadsProjectImages, verifyFileType } from '../middleware/uploads.middleware';
 
 const router = express.Router();
@@ -17,12 +18,10 @@ const router = express.Router();
    * POST /api/upload/projects
    * Upload 1-10 project images
    * Returns array of file paths
-   *
-   * TODO Phase 5: Add authentication middleware
-   * router.post('/projects', authenticate, uploadProjectImages.array('images', 10), ...)
    */
   router.post(
   '/projects',
+  authGuard,
   uploadsProjectImages.array('images', 10),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -79,12 +78,10 @@ const router = express.Router();
   /**
    * DELETE /api/upload/projects/:filename
    * Delete a project image (with path traversal protection)
-   *
-   * TODO Phase 5: Add authentication middleware
-   * router.delete('/projects/:filename', authenticate, ...)
    */
   router.delete(
     '/projects/:filename',
+    authGuard,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const { filename } = req.params;

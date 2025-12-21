@@ -3,10 +3,9 @@ import path from 'path';
 
 import healthRouter from './routes/health.routes';
 
-
 // Load environment variables FIRST, before any other imports
 const envPath = path.resolve(__dirname, '../.env.local');
-const result = dotenv.config({ path: envPath })
+const result = dotenv.config({ path: envPath });
 
 if (result.error) {
   console.warn(`⚠️  No .env.local file found at ${envPath}, using environment variables`);
@@ -19,7 +18,7 @@ import express from 'express';
 import { testConnection } from './config/database.config';
 // eslint-disable-next-line import/first -- Must load dotenv before other imports
 import projectRouter from './routes/projects.routes';
-  // eslint-disable-next-line import/first -- Must load dotenv before other imports
+// eslint-disable-next-line import/first -- Must load dotenv before other imports
 import uploadsRouter from './routes/uploads.routes';
 
 const app = express();
@@ -29,11 +28,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 //Serve static files for uploads
-app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+//TODO: check if production issue
+// app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Routes
 app.use('/api/projects', projectRouter);
 app.use('/api/uploads', uploadsRouter);
+// eslint-disable-next-line import/first -- Must load dotenv before other imports
+import authRouter from './routes/auth.routes';
+
+app.use('/api/auth', authRouter);
 
 app.use('/', healthRouter);
 

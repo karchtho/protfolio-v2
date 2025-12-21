@@ -106,9 +106,9 @@ portfolio/
 - [x] Docker secrets support (production-ready with secrets.ts)
 - [x] Angular runtime configuration (build once, deploy anywhere)
 - [x] Docker dev & prod environments fully functional
-- [ ] Validation des données (express-validator ou Zod)
-- [ ] Gestion d'erreurs centralisée
-- [ ] Tests unitaires des repositories et controllers
+- [x] Validation des données (Zod schemas + validateRequest middleware)
+- [ ] Gestion d'erreurs centralisée — *Deferred to v2 (see docs/backend-v2-features.md)*
+- [ ] Tests unitaires des repositories et controllers — *Deferred to v2*
 
 ### Phase 3 : Frontend Angular ✅
 - [x] Comprendre les standalone components
@@ -138,15 +138,24 @@ portfolio/
 - [x] Architecture SCSS (tokens OKLCH, themes, utilities) — *Système complet implémenté*
 - [x] **DB schema images** : colonnes `thumbnail` + `images` JSON, seeds avec placeholders
 - [x] **Volume Docker uploads** : persistance configurée dans docker-compose
-- [ ] **Backend upload API** : Multer + routes POST/DELETE + validation (À FAIRE)
+- [x] **Backend upload API** : Multer + routes POST/DELETE + validation ✅
 - [ ] Design responsive mobile-first
 - [ ] Animations de base
 
 ### Phase 5 : Admin Panel
-- [ ] Authentification JWT (login, tokens, refresh)
-- [ ] Guards Angular pour routes protégées
-- [ ] Interface CRUD admin
-- [ ] Upload d'images (Multer + stockage fichier local, voir section Images)
+**Backend ✅ COMPLET**
+- [x] Authentification JWT (login endpoint + access tokens)
+- [x] AuthGuard middleware (protect routes)
+- [x] Protected CRUD endpoints (projects + uploads)
+- [ ] Refresh tokens — *Deferred to v2*
+
+**Frontend 🚧 EN COURS**
+- [ ] AuthService Angular (login, logout, token storage)
+- [ ] AuthGuard Angular (protect admin routes)
+- [ ] HTTP Interceptor (auto-add Authorization header)
+- [ ] Login Page component
+- [ ] Interface CRUD admin (create/edit projects)
+- [ ] Admin upload interface (drag & drop images)
 
 ### Phase 6 : Déploiement OVH
 - [x] Docker Compose production optimisé — *docker-compose.prod.yml avec secrets*
@@ -276,27 +285,28 @@ Les échanges dans Claude Code peuvent rester en français.
 
 ## 🚀 Prochaine étape
 
-**Phase 3.5 — Layout & Navigation : Page Home** ✅ Terminé !
+**Phase 5 Backend — Authentication System ✅ TERMINÉ !**
 
-**État actuel (Décembre 17, 2025) :**
+**État actuel (Décembre 21, 2025) :**
 
-**Phase 4 — CRUD Projects & Upload System ✅ COMPLET**
-- ✅ Backend upload system (Multer + sécurité multi-couches)
-- ✅ Routes upload : POST/DELETE /api/uploads/projects
-- ✅ Static file serving : /uploads/projects/*
-- ✅ Models TypeScript synchronisés (short/long descriptions, status enum)
-- ✅ Featured projects fonctionnels
+**Phase 5 Backend : Authentication ✅ COMPLET**
+- ✅ Users table migration + UsersRepository
+- ✅ Auth service (login, verifyToken, hashPassword)
+- ✅ JWT configuration (access tokens 1h, issuer/audience validation)
+- ✅ POST /api/auth/login endpoint (Zod validation)
+- ✅ AuthGuard middleware (protect routes)
+- ✅ TypeScript types (TokenPayload, Express Request extension)
+- ✅ Protected routes (projects + uploads)
+- 📝 Refresh tokens — Deferred to v2 (see docs/backend-v2-features.md)
+- 📝 Error handler middleware — Deferred to v2 (controllers have try/catch)
 
 **Déploiement Production ✅ OPÉRATIONNEL**
 - ✅ **Site déployé sur https://karcherthomas.com**
 - ✅ Docker Compose prod configuré (frontend + backend + MySQL)
 - ✅ GitHub Actions CI/CD fonctionnel
 - ✅ Docker secrets configurés
+- ✅ NODE_ENV correctly set (dev + prod)
 - ✅ Healthcheck endpoints opérationnels
-- ✅ **Bugs de déploiement résolus** :
-  - TypeScript `rootDir: "./"` (pas `"."`)
-  - Docker build paths (`dist/src/main.js`)
-  - Static uploads serving (`../../uploads`)
 - ✅ Volume uploads persistant
 - ✅ Images affichées correctement en prod
 
@@ -308,17 +318,14 @@ Les échanges dans Claude Code peuvent rester en français.
 - ✅ Design tokens system complet
 - ✅ Page Home (hero + featured projects + skills)
 
-**Phase 5 : Admin Panel 🚧 EN COURS**
-- ✅ Migration SQL `users` table créée
-- ✅ Password admin hashé avec bcrypt
-- ✅ Modèle User TypeScript créé (`User`, `UserSafe`, `LoginCredentials`, `AuthResponse`)
-- ⏳ **À FAIRE** : Repository + Login endpoint + JWT tokens + AuthGuard
+**Phase 5 Frontend : Angular Auth 🚧 PROCHAINE ÉTAPE**
+- ⏳ **À FAIRE** : AuthService Angular + Login page + AuthGuard + HTTP Interceptor
 
 **Prochaines étapes (PRIORITÉ) :**
-1. **Phase 5 : Admin Panel** — Continuer JWT auth + CRUD interface (EN COURS)
-2. **Page Project Detail** — long_description + carousel images
-3. **Optimisations** : Résoudre warnings NgOptimizedImage
-4. **Contact form** — formulaire + backend endpoint
+1. **Phase 5 Frontend : Angular Auth** — AuthService + Login page + AuthGuard + HTTP Interceptor (EN COURS)
+2. **Phase 5 Frontend : Admin CRUD** — Interface création/édition projets + upload images
+3. **Page Project Detail** — long_description + carousel images
+4. **Contact form** — formulaire + backend endpoint (optionnel v1)
 5. **Mobile hamburger menu** — responsive navbar (optionnel v1)
 
 **Documentation :**
@@ -536,4 +543,4 @@ Remove defensive code that doesn't match the codebase style:
 - Type checks on typed parameters
 - Try/catch blocks in trusted codepaths
 
-*Dernière mise à jour : 17 Décembre 2025 — Phase 4C-4D terminées (Backend upload system ✅, Frontend model sync ✅, Repository JSON parsing bug fixed ✅) — Prochaine étape : Phase 5 Admin Panel*
+*Dernière mise à jour : 21 Décembre 2025 — Phase 5 Backend Authentication ✅ COMPLET (JWT login, AuthGuard middleware, protected routes, Zod validation) — Error handler & refresh tokens deferred to v2 (see docs/backend-v2-features.md) — Prochaine étape : Phase 5 Frontend Angular Auth*

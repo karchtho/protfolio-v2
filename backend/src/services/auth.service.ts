@@ -12,16 +12,16 @@ import * as usersRepository from '../repositories/users.repository';
  * JWT payload structure
  * this is what gets encoded inside the token
  */
-interface TokenPayload {
+export interface TokenPayload {
   userId: number;
   username: string;
 }
 
 /**
- * Login a user with usernmae and password
+ * Login a user with username and password
  *
  * @param credentials - Username and password
- * @returns AuthResponse with token and user fata or null if invalid
+ * @returns AuthResponse with token and user data or null if invalid
  */
 export async function login(credentials: LoginCredentials): Promise<AuthResponse | null> {
   const user = await usersRepository.findByUsername(credentials.username);
@@ -30,9 +30,9 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
     return null;
   }
 
-  const isPasswordValide = await bcrypt.compare(credentials.password, user.password_hash);
+  const isPasswordValid = await bcrypt.compare(credentials.password, user.password_hash);
 
-  if (!isPasswordValide) {
+  if (!isPasswordValid) {
     return null;
   }
 
