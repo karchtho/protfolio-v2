@@ -25,12 +25,17 @@ import uploadsRouter from './routes/uploads.routes';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS
+// TODO: check if ok for prod
+app.use(cors({
+origin: 'http://localhost:4200',
+credentials: true
+}));
+
 // Middleware
 app.use(express.json());
 
 //Serve static files for uploads
-//TODO: check if production issue
-// app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Routes
@@ -43,9 +48,7 @@ app.use('/api/auth', authRouter);
 
 app.use('/', healthRouter);
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
+
 // Test database connection before starting server
 testConnection()
   .then(() => {
@@ -57,8 +60,3 @@ testConnection()
     console.error('Failed to start server due to database connection error:', error);
     process.exit(1);
   });
-
-app.use(cors({
-  origin: 'http://localhost:4200',
-  credentials: true
-}));

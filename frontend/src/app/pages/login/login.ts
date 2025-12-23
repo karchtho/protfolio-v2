@@ -55,10 +55,28 @@ export class Login {
    * Handle form submission
    */
   protected onSubmit(): void {
-    this.apiError.set(null);
+    // console.log('🔵 onSubmit() called');
 
+    // 1. Avant markAllAsTouched
+    // console.log('Before markAllAsTouched:', {
+    //   usernameTouched: this.loginForm.controls.username.touched,
+    //   passwordTouched: this.loginForm.controls.password.touched,
+    //   usernameInvalid: this.loginForm.controls.username.invalid,
+    //   passwordInvalid: this.loginForm.controls.password.invalid,
+    // });
+
+    this.loginForm.markAllAsTouched();
+
+    // 2. Après markAllAsTouched
+    console.log('After markAllAsTouched:', {
+      usernameTouched: this.loginForm.controls.username.touched,
+      passwordTouched: this.loginForm.controls.password.touched,
+      usernameInvalid: this.loginForm.controls.username.invalid,
+      passwordInvalid: this.loginForm.controls.password.invalid,
+    });
+
+    this.apiError.set(null);
     if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
       return;
     }
 

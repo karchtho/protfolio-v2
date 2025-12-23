@@ -11,15 +11,15 @@
 
     // Error state modifier
     &--error {
-      border-color: var(--danger);
+      border-color: var(--error);
 
       &:focus {
-        border-color: var(--danger);
-        box-shadow: 0 0 0 3px oklch(from var(--danger) l c h / 0.1);
+        border-color: var(--error);
+        box-shadow: 0 0 0 3px oklch(from var(--error) l c h / 0.1);
       }
 
       &:hover:not(:disabled) {
-        border-color: var(--danger);
+        border-color: var(--error);
       }
     }
 

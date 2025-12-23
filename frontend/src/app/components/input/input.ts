@@ -32,6 +32,7 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
   imports: [],
   template: `
     <input
+      [id]="id()"
       [type]="type()"
       [value]="value()"
       [placeholder]="placeholder()"
@@ -54,6 +55,7 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 })
 export class Input {
   // Input signals
+  id = input<string>(''); // ✅ AJOUTÉ
   type = input<'text' | 'email' | 'password'>('text');
   value = input<string>('');
   placeholder = input<string>('');

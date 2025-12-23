@@ -47,7 +47,7 @@ export class Button {
     const baseClasses = `button button--${this.variant()} button--${this.size()}`;
 
     // Add disabled modifier if button is disabled OR if href exists but is empty
-    if (this.disabled() || (this.href() !== undefined && !this.isLinkAvailable())) {
+    if ((this.href() !== undefined && !this.isLinkAvailable())) {
       return `${baseClasses} button--disabled`;
     }
 

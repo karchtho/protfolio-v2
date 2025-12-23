@@ -52,14 +52,14 @@
       margin-bottom: var(--spacing-6);
 
       // Appearance
-      background: oklch(from var(--danger) l c h / 0.1);
-      border: 1px solid var(--danger);
+      background: oklch(from var(--error) l c h / 0.1);
+      border: 1px solid var(--error);
       border-radius: var(--radius-default);
 
       // Typography
       @include body-text;
       font-size: var(--font-size-sm);
-      color: var(--danger);
+      color: var(--error);
     }
 
     &__api-error-icon {

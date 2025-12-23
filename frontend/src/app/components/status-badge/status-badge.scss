@@ -1,0 +1,64 @@
+@use '../../../styles/mixins' as *;
+
+:host {
+  display: inline-block;
+}
+
+.status-badge {
+  // Base styles
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1) var(--spacing-3); // 4px 12px
+  border-radius: var(--radius-full); // Pill shape
+
+  // Typography
+  font-size: var(--font-size-xs); // 12px
+  font-weight: var(--font-weight-semibold); // 600
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+
+  // Transition
+  transition: transform var(--transition-fast) var(--ease-out);
+
+  /* ==========================================================================
+       VARIANT MODIFIERS - Using design tokens
+       ========================================================================== */
+
+  // In Development - Blue
+  &--in-development {
+    background: var(--status-development-alpha);
+    color: var(--status-development);
+    border: 1px solid oklch(from var(--status-development) l c h / 0.3);
+  }
+
+  // Completed - Green
+  &--completed {
+    background: var(--status-completed-alpha);
+    color: var(--status-completed);
+    border: 1px solid oklch(from var(--status-completed) l c h / 0.3);
+  }
+
+  // Actively Maintained - Purple
+  &--actively-maintained {
+    background: var(--status-maintained-alpha);
+    color: var(--status-maintained);
+    border: 1px solid oklch(from var(--status-maintained) l c h / 0.3);
+  }
+
+  // Deprecated - Orange
+  &--deprecated {
+    background: var(--status-deprecated-alpha);
+    color: var(--status-deprecated);
+    border: 1px solid oklch(from var(--status-deprecated) l c h / 0.3);
+  }
+
+  // Archived - Gray
+  &--archived {
+    background: var(--status-archived-alpha);
+    color: var(--status-archived);
+    border: 1px solid oklch(from var(--status-archived) l c h / 0.2);
+  }
+}

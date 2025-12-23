@@ -6,20 +6,18 @@
     }
   </label>
 
-  <app-input
+  <input
+    [id]="id()"
+    [name]="id()"
     [type]="type()"
-    [value]="control().value"
+    [formControl]="control()"
     [placeholder]="placeholder()"
-    [disabled]="control().disabled"
-    [required]="required()"
     [autocomplete]="autocomplete()"
-    [ariaInvalid]="showError()"
-    [ariaDescribedBy]="showError() ? errorId() : ''"
-    (valueChange)="onValueChange($event)"
-    (inputBlur)="onInputBlur()"
+    [attr.aria-invalid]="showError() || null"
+    [attr.aria-describedby]="showError() ? errorId() : null"
   />
 
   @if (showError()) {
-  <app-error-message [id]="errorId()" [message]="errorMessage()" />
+  <app-error-message [id]="errorId()" [message]="getErrorMessage()" />
   }
 </div>

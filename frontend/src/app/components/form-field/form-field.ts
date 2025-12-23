@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { ErrorMessage } from '../error-message/error-message';
-import { Input } from '../input/input';
 /**
  * FormField - Composite Component
  *
@@ -38,7 +37,7 @@ import { Input } from '../input/input';
 @Component({
   selector: 'app-form-field',
   standalone: true,
-  imports: [ ReactiveFormsModule, Input, ErrorMessage],
+  imports: [ReactiveFormsModule, ErrorMessage],
   templateUrl: './form-field.html',
   styleUrl: './form-field.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,13 +61,13 @@ export class FormField {
   protected errorId = computed(() => `${this.id()}-error`);
 
   // Computed: Should we throw the error ?
-  protected showError = computed(() => {
+  protected showError(): boolean {
     const ctrl = this.control();
     return ctrl.invalid && (ctrl.dirty || ctrl.touched);
-  });
+  }
 
   // Computed: Error message text
-  protected errorMessage = computed(() => {
+  protected getErrorMessage(): string{
     const ctrl = this.control();
     if (!ctrl.errors) {
       return '';
@@ -99,20 +98,6 @@ export class FormField {
 
     // Generic fallback
     return `${this.label()} is invalid`;
-  });
-
-  /**
-   * Handle input value change - update FormControl
-   */
-  protected onValueChange(value: string): void {
-    this.control().setValue(value);
-    this.control().markAsDirty();
   }
 
-  /**
-   * Handle input blur - mark as touched
-  */
-  protected onInputBlur(): void {
-    this.control().markAsTouched();
-  }
 }

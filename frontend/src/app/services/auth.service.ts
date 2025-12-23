@@ -42,10 +42,10 @@ export class AuthService {
    * Stores token + user data on success
    */
   login(username: string, password: string): Observable<AuthResponse> {
-    const apiUrl = this.config. apiUrl;
+    const apiUrl = this.config.apiUrl;
     const body: LoginRequest = { username, password };
 
-    return this.http.post<AuthResponse>(`${apiUrl}/auth/login`, body).pipe(
+    return this.http.post<AuthResponse>(`${apiUrl}/api/auth/login`, body).pipe(
       tap((response) => {
         // Store token and user in localStorage
         localStorage.setItem(this.TOKEN_KEY, response.token);

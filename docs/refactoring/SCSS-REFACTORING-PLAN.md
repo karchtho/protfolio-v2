@@ -1521,7 +1521,7 @@ p { }
     @include card;  // Uses mixin
     text-align: center;
     padding: var(--spacing-12);
-    color: var(--danger);
+    color: var(--error);
   }
 
   &__error-title {
@@ -2312,7 +2312,7 @@ Complete reference for the Portfolio Angular design token system.
 ### Base Colors (OKLCH)
 - `--primary`: Primary brand color
 - `--secondary`: Secondary accent color
-- `--success`, `--warning`, `--danger`, `--info`: Status colors
+- `--success`, `--warning`, `--error`, `--info`: Status colors
 
 ### Text Colors
 - `--text-primary`: Main text (highest contrast)
