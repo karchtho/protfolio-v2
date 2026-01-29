@@ -20,6 +20,8 @@ export class Navbar {
     {label: 'Home', path: '/'},
     {label: 'Projects', path: '/projects'},
     // {label: 'About', path: '/about'}
+    // TODO: Consider adding deep, well furnished about section later.
+
   ]
 
   toggleMobileMenu(): void  {
